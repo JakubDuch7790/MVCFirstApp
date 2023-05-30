@@ -9,7 +9,5 @@ namespace MVCFirstApp.Models
         [Required]
         public string Name { get; set; }
         public int DisplayOrder { get; set; }
-
-        //nothing
     }
 }
