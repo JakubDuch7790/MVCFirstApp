@@ -3,6 +3,7 @@ using MVCFirstApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822132550_AddAnotherCategory")]
+    partial class AddAnotherCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,12 +67,6 @@ namespace MVCFirstApp.Migrations
                             Id = 4,
                             DisplayOrder = 4,
                             Name = "Delta"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DisplayOrder = 5,
-                            Name = "Epsilon"
                         });
                 });
 #pragma warning restore 612, 618
