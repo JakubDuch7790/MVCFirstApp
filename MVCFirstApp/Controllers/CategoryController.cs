@@ -25,7 +25,11 @@ namespace MVCFirstApp.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if(ModelState.IsValid)
+            if (obj.Name.ToLower() == "hitler")
+            {
+                ModelState.AddModelError("name", "Fuhrer");
+            }
+            if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
