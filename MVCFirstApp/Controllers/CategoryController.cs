@@ -25,9 +25,9 @@ namespace MVCFirstApp.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            if (obj.Name.ToLower() == "hitler")
+            if (obj.Name != null && obj.Name.ToLower() == obj.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "Fuhrer");
+                ModelState.AddModelError("name", "Property name cannot be same as DisplayOrder");
             }
             if (ModelState.IsValid)
             {
