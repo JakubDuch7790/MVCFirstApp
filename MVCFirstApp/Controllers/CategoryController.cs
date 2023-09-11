@@ -45,6 +45,8 @@ namespace MVCFirstApp.Controllers
             }
 
             Category? wantedCategoryfromDB = _db.Categories.Find(id);
+            //Category? wantedCategoryfromDB1 = _db.Categories.FirstOrDefault(c => c.Id == id);
+            //Category? wantedCategoryfromDB2 = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
 
             if (wantedCategoryfromDB == null)
             {
