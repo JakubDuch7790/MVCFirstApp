@@ -67,5 +67,39 @@ namespace MVCFirstApp.Controllers
             }
             return View();
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Category? wantedCategoryfromDB = _db.Categories.Find(id);
+
+            if (wantedCategoryfromDB == null)
+            {
+                return NotFound();
+            }
+
+            return View(wantedCategoryfromDB);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            Category? obj = _db.Categories.Find(id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
+
+}
 }
