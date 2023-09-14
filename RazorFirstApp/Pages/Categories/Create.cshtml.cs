@@ -19,5 +19,12 @@ namespace RazorFirstApp.Pages.Categories
         public void OnGet()
         {
         }
+
+        public IActionResult OnPost(Category obj)
+        {
+            _db.Categories.Add(obj);
+            _db.SaveChanges();
+            return RedirectToPage();
+        }
     }
 }
