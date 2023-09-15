@@ -8,7 +8,7 @@ namespace RazorFirstApp.Pages.Categories
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
-
+        [BindProperty]
         public Category Category { get; set; }
 
         public CreateModel (ApplicationDbContext db)
@@ -22,9 +22,9 @@ namespace RazorFirstApp.Pages.Categories
 
         public IActionResult OnPost(Category obj)
         {
-            _db.Categories.Add(obj);
+            _db.Categories.Add(Category);
             _db.SaveChanges();
-            return RedirectToPage();
+            return RedirectToPage("Index");
         }
     }
 }
