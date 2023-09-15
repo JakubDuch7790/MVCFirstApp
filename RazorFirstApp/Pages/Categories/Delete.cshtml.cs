@@ -18,12 +18,22 @@ namespace RazorFirstApp.Pages.Categories
 
         public void OnGet(int? id)
         {
-            Category = _db.Categories.FirstOrDefault(c => c.Id == id);
+            if(id != null && id != 0)
+            {
+                Category = _db.Categories.FirstOrDefault(c => c.Id == id);
+            }
         }
 
         public IActionResult OnPost()
         {
-            _db.Remove(Category);
+            Category? obj = _db.Categories.Find(Category.Id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Remove(obj);
             _db.SaveChanges();
             return RedirectToPage("Index");
         }
