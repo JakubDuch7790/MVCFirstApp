@@ -35,6 +35,7 @@ namespace RazorFirstApp.Pages.Categories
 
             _db.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Category successfully removed";
             return RedirectToPage("Index");
         }
     }

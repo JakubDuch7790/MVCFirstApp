@@ -24,6 +24,7 @@ namespace RazorFirstApp.Pages.Categories
         {
             _db.Categories.Add(Category);
             _db.SaveChanges();
+            TempData["success"] = "Category successfully created";
             return RedirectToPage("Index");
         }
     }

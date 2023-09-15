@@ -30,6 +30,7 @@ namespace RazorFirstApp.Pages.Categories
             {
                 _db.Categories.Update(Category);
                 _db.SaveChanges();
+                TempData["success"] = "Category successfully edited";
                 return RedirectToPage("Index");
             }
             return Page();
