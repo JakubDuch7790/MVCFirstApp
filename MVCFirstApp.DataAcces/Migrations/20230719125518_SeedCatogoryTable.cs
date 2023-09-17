@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace MVCFirstApp.Migrations
+namespace MVCFirstApp.DataAcces.Migrations
 {
     /// <inheritdoc />
     public partial class SeedCatogoryTable : Migration

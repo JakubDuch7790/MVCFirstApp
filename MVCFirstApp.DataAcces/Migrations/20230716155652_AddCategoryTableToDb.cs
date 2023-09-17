@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace MVCFirstApp.Migrations
+namespace MVCFirsMVCFirstApp.DataAccestApp.Migrations
 {
     /// <inheritdoc />
     public partial class AddCategoryTableToDb : Migration

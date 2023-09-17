@@ -16,4 +16,8 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MVCFirstApp.Models\MVCFirstApp.Models.csproj" />
+  </ItemGroup>
+
 </Project>
