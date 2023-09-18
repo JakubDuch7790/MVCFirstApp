@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MVCFirstApp.Data;
+using MVCFirstApp.DataAcces.Data;
 using MVCFirstApp.Models;
 
 namespace MVCFirstApp.Controllers

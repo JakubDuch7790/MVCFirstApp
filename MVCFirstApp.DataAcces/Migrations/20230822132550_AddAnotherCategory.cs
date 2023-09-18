@@ -2,8 +2,7 @@
 
 #nullable disable
 
-namespace MVCFirstApp.DataAcces.Migrations
-{
+namespace MVCFirstApp.DataAcces.Migrations;
     /// <inheritdoc />
     public partial class AddAnotherCategory : Migration
     {
@@ -25,4 +24,4 @@ namespace MVCFirstApp.DataAcces.Migrations
                 keyValue: 4);
         }
     }
-}
+

@@ -8,7 +8,7 @@ using MVCFirstApp.DataAcces.Data;
 
 #nullable disable
 
-namespace MVCFirstApp.Migrations
+namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230822192834_AddedAnotherCategory")]
