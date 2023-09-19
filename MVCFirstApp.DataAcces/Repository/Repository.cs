@@ -29,7 +29,9 @@ namespace MVCFirstApp.DataAcces.Repository
 
         public T Get(Expression<Func<T, bool>> filter)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = dbSet;
+            query = query.Where(filter);
+            return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll()
