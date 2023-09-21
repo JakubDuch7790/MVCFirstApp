@@ -1,5 +1,8 @@
 using MVCFirstApp.DataAcces.Data;
 using Microsoft.EntityFrameworkCore;
+using MVCFirstApp.DataAcces.Repository.IRepository;
+using MVCFirstApp.DataAcces.Repository;
+using MVCFirstApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//Register service to dependency injection
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 
