@@ -1,19 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Data;
+using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 
 namespace MVCFirstApp.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly ICategoryRepository _categoryRepo;
+        public CategoryController(ICategoryRepository db)
         {
-            _db = db;
+            _categoryRepo = db;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -31,8 +32,8 @@ namespace MVCFirstApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _categoryRepo.Add(obj);
+                _categoryRepo.Save();
                 TempData["success"] = "Category successfully created";
                 return RedirectToAction("Index");
             }
@@ -45,7 +46,7 @@ namespace MVCFirstApp.Controllers
                 return NotFound();
             }
 
-            Category? wantedCategoryfromDB = _db.Categories.Find(id);
+            Category? wantedCategoryfromDB = _categoryRepo.Get(ID => ID.Id==id);
             //Category? wantedCategoryfromDB1 = _db.Categories.FirstOrDefault(c => c.Id == id);
             //Category? wantedCategoryfromDB2 = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
 
@@ -62,8 +63,8 @@ namespace MVCFirstApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _categoryRepo.Update(obj);
+                _categoryRepo.Save();
                 TempData["success"] = "Category successfully updated";
 
                 return RedirectToAction("Index");
@@ -78,7 +79,7 @@ namespace MVCFirstApp.Controllers
                 return NotFound();
             }
 
-            Category? wantedCategoryfromDB = _db.Categories.Find(id);
+            Category? wantedCategoryfromDB = _categoryRepo.Get(ID => ID.Id == id);
 
             if (wantedCategoryfromDB == null)
             {
@@ -91,15 +92,15 @@ namespace MVCFirstApp.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _db.Categories.Find(id);
+            Category? obj = _categoryRepo.Get(ID => ID.Id == id);
 
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _categoryRepo.Remove(obj);
+            _categoryRepo.Save();
             TempData["success"] = "Category successfully removed";
 
             return RedirectToAction("Index");
