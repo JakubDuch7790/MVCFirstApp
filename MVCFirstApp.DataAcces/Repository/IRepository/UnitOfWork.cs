@@ -9,13 +9,14 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public ICategoryRepository CategoryRepository { get;private set; }
+        public ICategoryRepository Category { get;private set; }
         private readonly ApplicationDbContext _db;
 
         public UnitOfWork(ApplicationDbContext db, CategoryRepository categoryRepository)
         {
-            CategoryRepository = categoryRepository;
             _db = db;
+            Category = new CategoryRepository(_db);
+
         }
 
         public void Save()
