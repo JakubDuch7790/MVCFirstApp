@@ -2,8 +2,9 @@
 using MVCFirstApp.Models;
 using System.Diagnostics;
 
-namespace MVCFirstApp.Controllers
+namespace MVCFirstApp.Areas.Host.Controllers
 {
+    [Area("Host")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

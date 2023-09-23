@@ -3,7 +3,7 @@ using MVCFirstApp.DataAcces.Data;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 
-namespace MVCFirstApp.Controllers
+namespace MVCFirstApp.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -41,12 +41,12 @@ namespace MVCFirstApp.Controllers
         }
         public IActionResult Edit(int? id)
         {
-            if (id== null || id==0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            Category? wantedCategoryfromDB = _unitOfWork.Category.Get(ID => ID.Id==id);
+            Category? wantedCategoryfromDB = _unitOfWork.Category.Get(ID => ID.Id == id);
             //Category? wantedCategoryfromDB1 = _db.Categories.FirstOrDefault(c => c.Id == id);
             //Category? wantedCategoryfromDB2 = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
 
