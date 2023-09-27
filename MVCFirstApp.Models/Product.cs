@@ -15,7 +15,22 @@ namespace MVCFirstApp.Models
         [Required]
         [DisplayName("Brand")]
         [MaxLength(30)]
-        public string Name { get; set; }
+        public string Brand { get; set; }
+        [Required]
+        [Display(Name = "Date of construction")]
+        public DateTime DateOfConstruction { get; set; }
+        [Required]
+        [Display(Name ="Kilometres driven")]
+        [Range(1, 1000000)]
+        public int KilometresDriven { get; set; }
+        [Required]
+        [Display(Name = "Power in kiloWatts")]
+        [Range(30, 400)]
+        public int PowerInKilowatts { get; set; }
+        [Required]
+        [Range(1, 4000000)]
+        public double Price { get; set; }
+
 
     }
 }
