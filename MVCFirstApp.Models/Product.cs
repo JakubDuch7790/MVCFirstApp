@@ -18,7 +18,7 @@ namespace MVCFirstApp.Models
         public string Brand { get; set; }
         [Required]
         [Display(Name = "Date of construction")]
-        public DateTime DateOfConstruction { get; set; }
+        public int YearOfConstruction { get; set; }
         [Required]
         [Display(Name ="Kilometres driven")]
         [Range(1, 1000000)]
