@@ -1,4 +1,5 @@
-﻿using MVCFirstApp.DataAcces.Repository.IRepository;
+﻿using MVCFirstApp.DataAcces.Data;
+using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using System;
 using System.Collections.Generic;
@@ -9,36 +10,18 @@ using System.Threading.Tasks;
 
 namespace MVCFirstApp.DataAcces.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
-        public void Add(Product entity)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly ApplicationDbContext _db;
 
-        public Product Get(Expression<Func<Product, bool>> filter)
+        public ProductRepository(ApplicationDbContext db) : base(db)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Product entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<Product> entities)
-        {
-            throw new NotImplementedException();
+            _db = db;
         }
 
         public void Update(Product product)
         {
-            throw new NotImplementedException();
+            _db.Product.Update(product);
         }
     }
 }
