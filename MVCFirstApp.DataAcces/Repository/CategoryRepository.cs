@@ -20,7 +20,7 @@ namespace MVCFirstApp.DataAcces.Repository
 
         public void Update(Category category)
         {
-            _db.Categories.Update(category);
+            _db.Category.Update(category);
         }
     }
 }
