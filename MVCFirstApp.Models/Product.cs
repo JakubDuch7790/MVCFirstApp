@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCFirstApp.Models
 {
@@ -30,6 +31,10 @@ namespace MVCFirstApp.Models
         [Required]
         [Range(1, 4000000)]
         public double Price { get; set; }
+
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
 
 
     }
