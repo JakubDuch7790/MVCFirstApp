@@ -46,31 +46,31 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 1,
                             DisplayOrder = 1,
-                            Name = "Alfa"
+                            Name = "Sedan"
                         },
                         new
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Beta"
+                            Name = "SUV"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
-                            Name = "Gama"
+                            Name = "Hatchback"
                         },
                         new
                         {
                             Id = 4,
                             DisplayOrder = 4,
-                            Name = "Delta"
+                            Name = "SuperSport"
                         },
                         new
                         {
                             Id = 5,
                             DisplayOrder = 5,
-                            Name = "Epsilon"
+                            Name = "Hypersport"
                         });
                 });
 
@@ -87,6 +87,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("KilometresDriven")
                         .HasColumnType("int");
 
@@ -101,6 +104,8 @@ namespace MVCFirstApp.DataAcces.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Product");
 
                     b.HasData(
@@ -108,6 +113,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 1,
                             Brand = "BMW",
+                            CategoryId = 1,
                             KilometresDriven = 106524,
                             PowerInKilowatts = 136,
                             Price = 25000.0,
@@ -117,6 +123,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
+                            CategoryId = 2,
                             KilometresDriven = 196524,
                             PowerInKilowatts = 128,
                             Price = 38000.0,
@@ -126,6 +133,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
+                            CategoryId = 3,
                             KilometresDriven = 326524,
                             PowerInKilowatts = 77,
                             Price = 7500.0,
@@ -135,6 +143,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
+                            CategoryId = 3,
                             KilometresDriven = 126524,
                             PowerInKilowatts = 84,
                             Price = 3600.0,
@@ -144,6 +153,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
+                            CategoryId = 3,
                             KilometresDriven = 136524,
                             PowerInKilowatts = 55,
                             Price = 500.0,
@@ -153,11 +163,23 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
+                            CategoryId = 3,
                             KilometresDriven = 116524,
                             PowerInKilowatts = 103,
                             Price = 2999.0,
                             YearOfConstruction = 2010
                         });
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.Product", b =>
+                {
+                    b.HasOne("MVCFirstApp.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
