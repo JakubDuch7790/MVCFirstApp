@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 
@@ -17,6 +18,14 @@ namespace MVCFirstApp.Areas.Admin.Controllers
         public IActionResult Index()
             {
                 List<Product> objCategoryList = _unitOfWork.Product.GetAll().ToList();
+
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(c =>
+            new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString(),
+            });
+
                 return View(objCategoryList);
             }
 
