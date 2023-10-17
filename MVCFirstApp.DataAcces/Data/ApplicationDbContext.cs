@@ -23,7 +23,9 @@ namespace MVCFirstApp.DataAcces.Data
                 new Category { Id = 2, Name = "SUV", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "Hatchback", DisplayOrder = 3 },
                 new Category { Id = 4, Name = "SuperSport", DisplayOrder = 4 },
-                new Category { Id = 5, Name = "Hypersport", DisplayOrder = 5 }
+                //new Category { Id = 5, Name = "Hypersport", DisplayOrder = 5 },
+                new Category { Id = 6, Name = "Combi", DisplayOrder = 6 }
+
                 );
 
             modelBuilder.Entity<Product>().HasData(
