@@ -38,7 +38,14 @@
                     <label asp-for=YearOfConstruction class="ms-2"></label>
                     <span asp-validation-for="YearOfConstruction" class="text-danger"></span>
                 </div>
-@*                <div class="form-floating py-1 col-12 ">
+                <div class="form-floating py-1 col-12 ">
+                    <select asp-for=YearOfConstruction class="form-control border-0 shadow">
+                        <option disabled selected>--Select Category</option>
+                    </select>
+                    <label asp-for=CategoryId class="ms-2"></label>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                @*                <div class="form-floating py-1 col-12 ">
                     <input asp-for= class="form-control border-0 shadow" />
                     <label asp-for=DisplayOrder class="ms-2"></label>
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>

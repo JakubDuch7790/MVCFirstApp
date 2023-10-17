@@ -17,21 +17,27 @@ namespace MVCFirstApp.Areas.Admin.Controllers
             }
         public IActionResult Index()
             {
-                List<Product> objCategoryList = _unitOfWork.Product.GetAll().ToList();
+            List<Product> objCategoryList = _unitOfWork.Product.GetAll().ToList();
 
+            //IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(c =>
+            //new SelectListItem
+            //{
+            //    Text = c.Name,
+            //    Value = c.Id.ToString(),
+            //});
+
+            return View(objCategoryList);
+            }
+
+        public IActionResult Create()
+            {
             IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(c =>
             new SelectListItem
             {
                 Text = c.Name,
                 Value = c.Id.ToString(),
             });
-
-                return View(objCategoryList);
-            }
-
-        public IActionResult Create()
-            {
-                return View();
+            return View();
             }
 
         [HttpPost]
