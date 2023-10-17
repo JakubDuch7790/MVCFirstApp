@@ -37,6 +37,9 @@ namespace MVCFirstApp.Areas.Admin.Controllers
                 Text = c.Name,
                 Value = c.Id.ToString(),
             });
+
+            ViewBag.CategoryList = CategoryList;
+
             return View();
             }
 
