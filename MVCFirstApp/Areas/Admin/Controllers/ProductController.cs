@@ -39,7 +39,7 @@ namespace MVCFirstApp.Areas.Admin.Controllers
             });
 
             //ViewBag.CategoryList = CategoryList;
-            ViewBag.CategoryList = CategoryList;
+            ViewData["CategoryList"] = CategoryList;
 
             return View();
             }
