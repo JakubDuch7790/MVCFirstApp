@@ -19,13 +19,6 @@ namespace MVCFirstApp.Areas.Admin.Controllers
             {
             List<Product> objCategoryList = _unitOfWork.Product.GetAll().ToList();
 
-            //IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category.GetAll().Select(c =>
-            //new SelectListItem
-            //{
-            //    Text = c.Name,
-            //    Value = c.Id.ToString(),
-            //});
-
             return View(objCategoryList);
             }
 
@@ -47,10 +40,6 @@ namespace MVCFirstApp.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Product obj)
             {
-                //if (obj.Brand != null && obj.Brand.ToLower() == obj..ToString())
-                //{
-                //    ModelState.AddModelError("name", "Property name cannot be same as DisplayOrder");
-                //}
                 if (ModelState.IsValid)
                 {
                     _unitOfWork.Product.Add(obj);
