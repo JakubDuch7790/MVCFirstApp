@@ -37,15 +37,15 @@ public class ProductController : Controller
                 })
             };
 
-            return View();
+            return View(productVM);
         }
 
     [HttpPost]
-    public IActionResult Create(Product obj)
+    public IActionResult Create(ProductVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product successfully created";
                 return RedirectToAction("Index");
