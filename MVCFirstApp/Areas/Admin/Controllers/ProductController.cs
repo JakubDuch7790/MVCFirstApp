@@ -23,7 +23,7 @@ public class ProductController : Controller
         return View(objCategoryList);
         }
 
-    public IActionResult Create()
+    public IActionResult Upsert(int? id)
         {
 
         ProductVM productVM = new()
@@ -37,7 +37,18 @@ public class ProductController : Controller
                 })
             };
 
+        if(id == null && id == 0)
+        {
+            //create
             return View(productVM);
+        }
+        else
+        {
+            //update
+            productVM.Product = _unitOfWork.Product.Get(product => product.Id == id);
+            return View(productVM);
+        }
+
         }
 
     [HttpPost]
