@@ -52,7 +52,7 @@ public class ProductController : Controller
         }
 
     [HttpPost]
-    public IActionResult Create(ProductVM productVM)
+    public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -73,38 +73,6 @@ public class ProductController : Controller
             };
 
             return View(productVM);
-        }
-    public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-
-            Product? wantedProductfromDB = _unitOfWork.Product.Get(ID => ID.Id == id);
-            //Category? wantedCategoryfromDB1 = _db.Categories.FirstOrDefault(c => c.Id == id);
-            //Category? wantedCategoryfromDB2 = _db.Categories.Where(c=> c.Id == id).FirstOrDefault();
-
-            if (wantedProductfromDB == null)
-            {
-                return NotFound();
-            }
-
-            return View(wantedProductfromDB);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Product.Update(obj);
-                _unitOfWork.Save();
-                TempData["success"] = "Poduct successfully updated";
-
-                return RedirectToAction("Index");
-            }
-            return View();
         }
 
         public IActionResult Delete(int? id)
