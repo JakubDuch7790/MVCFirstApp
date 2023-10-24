@@ -34,10 +34,12 @@ public class ProductController : Controller
                 {
                     Text = c.Name,
                     Value = c.Id.ToString(),
-                })
+                }),
+            Product = new Product()
             };
 
-        if(id == null && id == 0)
+
+        if(id == null || id == 0)
         {
             //create
             return View(productVM);
