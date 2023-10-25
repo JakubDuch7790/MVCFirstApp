@@ -76,7 +76,7 @@ public class ProductController : Controller
 
             return View(productVM);
         }
-
+    //fake
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
