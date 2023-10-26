@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace MVCFirstApp.Models
 {
@@ -18,6 +20,7 @@ namespace MVCFirstApp.Models
         [DisplayName("Brand")]
         [MaxLength(30)]
         public string Brand { get; set; }
+        public string Description { get; set; }
         [Required]
         [Display(Name = "Date of construction")]
         public int YearOfConstruction { get; set; }
