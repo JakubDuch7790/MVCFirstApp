@@ -57,13 +57,21 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
     [HttpPost]
     public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
-            if (ModelState.IsValid)
+        if (ModelState.IsValid)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            if(file!= null)
             {
-                _unitOfWork.Product.Add(productVM.Product);
-                _unitOfWork.Save();
-                TempData["success"] = "Product successfully created";
-                return RedirectToAction("Index");
+                string fileName = Guid.NewGuid().ToString();
+                string productPath = Path.Combine(wwwRootPath, @"images\product");
             }
+            
+            _unitOfWork.Product.Add(productVM.Product);
+            _unitOfWork.Save();
+            TempData["success"] = "Product successfully created";
+            return RedirectToAction("Index");
+        }
         else
         {
             productVM.CategoryList = _unitOfWork.Category.GetAll().Select(c =>
