@@ -66,6 +66,17 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                 string productPath = Path.Combine(wwwRootPath, @"images\product");
 
+                if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                {
+                    //delete old img
+                    var oldImgPath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImgPath))
+                    {
+                        System.IO.File.Delete(oldImgPath);
+                    }
+                }
+
                 using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                 {
                     file.CopyTo(fileStream);
@@ -74,7 +85,14 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
                 productVM.Product.ImageUrl = @"\images\product\" + fileName;
             }
             
-            _unitOfWork.Product.Add(productVM.Product);
+            if (productVM.Product.Id == 0)
+            {
+                _unitOfWork.Product.Add(productVM.Product);
+            }
+            else
+            {
+                _unitOfWork.Product.Update(productVM.Product);
+            }
             _unitOfWork.Save();
             TempData["success"] = "Product successfully created";
             return RedirectToAction("Index");
