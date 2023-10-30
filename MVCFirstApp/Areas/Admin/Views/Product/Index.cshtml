@@ -21,7 +21,7 @@
             </div>
 
         </div>
-        <table class="table table-bordered table-striped bg-black">
+        <table class="table table-bordered table-striped bg-body">
             <thead>
                 <tr align="center">
                     <th>
@@ -52,14 +52,27 @@
                             @obj.Price
                         </td>
                         <td>
-                            <div class="w-75 btn-group" role="group">
+                            @obj.KilometresDriven
+                        </td>
+                        <td>
+                            @obj.PowerInKilowatts
+                        </td>
+                        <td>
+                            @obj.YearOfConstruction
+                        </td>
+                        <td>
+                            @obj.Description
+                        </td>
+
+                        <td>
+                            <div class="w-auto btn-group" role="group">
                                 <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-auto">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             </div>
                         </td>
                         <td>
-                            <div class="w-75 btn-group" role="group">
+                            <div class="w-auto btn-group" role="group">
                                 <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-auto">
                                     <i class="bi bi-trash3-fill"></i>
                                 </a>
