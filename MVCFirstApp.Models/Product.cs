@@ -41,7 +41,7 @@ namespace MVCFirstApp.Models
         [ValidateNever]
         public Category Category { get; set; }
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        public string ?ImageUrl { get; set; }
 
 
     }
