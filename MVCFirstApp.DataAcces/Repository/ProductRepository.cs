@@ -21,7 +21,23 @@ namespace MVCFirstApp.DataAcces.Repository
 
         public void Update(Product product)
         {
-            _db.Product.Update(product);
+            //_db.Product.Update(product);
+            var objectFromDb = _db.Product.FirstOrDefault(u => u.Id == product.Id);
+            if (objectFromDb != null)
+            {
+                objectFromDb.Brand = product.Brand;
+                objectFromDb.KilometresDriven = product.KilometresDriven;
+                objectFromDb.Price = product.Price;
+                objectFromDb.PowerInKilowatts = product.PowerInKilowatts;
+                objectFromDb.Description = product.Description;
+                objectFromDb.CategoryId = product.CategoryId;
+                objectFromDb.Category = product.Category;
+
+                if(product.ImageUrl != null)
+                {
+                    objectFromDb.ImageUrl = product.ImageUrl;
+                }
+            }
         }
     }
 }
