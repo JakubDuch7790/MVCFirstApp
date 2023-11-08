@@ -21,6 +21,7 @@ namespace MVCFirstApp.DataAcces.Repository
             _db = db;
             this.dbSet = _db.Set<T>();
             //_db.Categories == dbSet
+            _db.Product.Include(u => u.Category);
         }
         public void Add(T entity)
         {
