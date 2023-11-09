@@ -34,10 +34,17 @@ namespace MVCFirstApp.DataAcces.Repository
             query = query.Where(filter);
             return query.FirstOrDefault();
         }
-
-        public IEnumerable<T> GetAll()
+        //Category, CoverType
+        public IEnumerable<T> GetAll(string? includedProperties)
         {
             IQueryable<T> query = dbSet;
+            if (!string.IsNullOrEmpty(includedProperties))
+            {
+                foreach(var includedProperty in includedProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includedProperty);
+                }
+            }
             return query.ToList();
         }
 
