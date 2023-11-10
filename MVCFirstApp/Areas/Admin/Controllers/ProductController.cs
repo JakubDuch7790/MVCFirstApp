@@ -143,7 +143,16 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
 
             return RedirectToAction("Index");
         }
+    #region API CALLS
+
+    [HttpGet]
+    public IActionResult GetAll() 
+    {
+        List<Product> objCategoryList = _unitOfWork.Product.GetAll(includedProperties: "Category").ToList();
+        return Json(new {data= objCategoryList});
     }
+    #endregion
+}
 
 
 
