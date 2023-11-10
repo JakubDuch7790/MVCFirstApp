@@ -21,7 +21,7 @@
             </div>
 
         </div>
-        <table class="table table-bordered table-striped bg-body">
+        <table id="tableData" class="table table-bordered table-striped bg-body">
             <thead>
                 <tr align="center">
                     <th>
@@ -44,34 +44,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var obj in Model)
-                {
-                    <tr>
-                        <td>
-                            @obj.Brand
-                        </td>
-                        <td>
-                            @obj.Price
-                        </td>
-                        <td>
-                            @obj.KilometresDriven
-                        </td>
-                        <td>
-                            @obj.PowerInKilowatts
-                        </td>
-                        <td>
-                            @obj.YearOfConstruction
-                        </td>
-                        <td>
-                            @obj.Category.Name
-                        </td>
-
-                        <td>
-                            @obj.Description
-                        </td>
-
-                        <td>
+                        @*<td>
                             <div class="w-auto btn-group" role="group">
                                 <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-auto">
                                     <i class="bi bi-pencil-square"> Edit</i>
@@ -85,11 +58,13 @@
                                 </a>
                             </div>
                         </td>
-                    </tr>
-                }
-            </tbody>
-
+                    </tr>*@
         </table>
     </div>
     </div>
+
+    @section Scripts{
+
+        <script src="~/js/product.js"></script>
+    }
 
