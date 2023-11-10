@@ -28,13 +28,19 @@ namespace MVCFirstApp.DataAcces.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string? includedProperties)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includedProperties))
+            {
+                foreach (var includedProperty in includedProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includedProperty);
+                }
+            }
             return query.FirstOrDefault();
         }
-        //Category, CoverType
         public IEnumerable<T> GetAll(string? includedProperties)
         {
             IQueryable<T> query = dbSet;
