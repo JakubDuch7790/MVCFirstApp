@@ -149,7 +149,7 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
     public IActionResult GetAll() 
     {
         List<Product> objCategoryList = _unitOfWork.Product.GetAll(includedProperties: "Category").ToList();
-        return Json(new {data= objCategoryList});
+        return Json(new {data = objCategoryList});
     }
     #endregion
 }
