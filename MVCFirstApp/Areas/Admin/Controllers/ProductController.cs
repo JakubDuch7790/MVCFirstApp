@@ -120,7 +120,7 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
         return Json(new { data = objCategoryList });
     }
 
-    //[HttpDelete]
+    [HttpDelete]
     public IActionResult Delete(int? id)
     {
         var productToDelete = _unitOfWork.Product.Get(p =>  p.Id == id);
