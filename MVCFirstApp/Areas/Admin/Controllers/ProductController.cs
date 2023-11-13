@@ -110,46 +110,37 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
 
             return View(productVM);
         }
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
 
-            Product? wantedProductfromDB = _unitOfWork.Product.Get(ID => ID.Id == id);
-
-            if (wantedProductfromDB == null)
-            {
-                return NotFound();
-            }
-
-            return View(wantedProductfromDB);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
-        {
-            Product? obj = _unitOfWork.Product.Get(ID => ID.Id == id);
-
-            if (obj == null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.Product.Remove(obj);
-            _unitOfWork.Save();
-            TempData["success"] = "Product successfully removed";
-
-            return RedirectToAction("Index");
-        }
     #region API CALLS
 
     [HttpGet]
-    public IActionResult GetAll() 
+    public IActionResult GetAll()
     {
         List<Product> objCategoryList = _unitOfWork.Product.GetAll(includedProperties: "Category").ToList();
-        return Json(new {data = objCategoryList});
+        return Json(new { data = objCategoryList });
+    }
+
+    //[HttpDelete]
+    public IActionResult Delete(int? id)
+    {
+        var productToDelete = _unitOfWork.Product.Get(p =>  p.Id == id);
+
+        if (productToDelete == null)
+        {
+            return Json(new { success = false, message = "Error while deleting" });
+        }
+
+        var oldImgPath = Path.Combine(_webHostEnvironment.WebRootPath, productToDelete.ImageUrl.TrimStart('\\'));
+
+        if (System.IO.File.Exists(oldImgPath))
+        {
+            System.IO.File.Delete(oldImgPath);
+        }
+
+        _unitOfWork.Product.Remove(productToDelete);
+        _unitOfWork.Save();
+
+        return Json(new { success = true, message = "Delete successful" });
     }
     #endregion
 }
