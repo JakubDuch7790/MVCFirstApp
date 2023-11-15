@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using System.Diagnostics;
 
@@ -8,6 +9,7 @@ namespace MVCFirstApp.Areas.Host.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -16,7 +18,9 @@ namespace MVCFirstApp.Areas.Host.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includedProperties:"Category");
+
+            return View(products);
         }
 
         public IActionResult Privacy()
