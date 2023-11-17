@@ -23,6 +23,12 @@ namespace MVCFirstApp.Areas.Host.Controllers
 
             return View(products);
         }
+        public IActionResult Details(int id)
+        {
+            Product product = _unitOfWork.Product.Get(p => p.Id==id, includedProperties: "Category");
+
+            return View(product);
+        }
 
         public IActionResult Privacy()
         {
