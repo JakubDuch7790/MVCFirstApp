@@ -26,6 +26,7 @@ namespace MVCFirstApp.DataAcces.Repository
             if (objectFromDb != null)
             {
                 objectFromDb.Brand = product.Brand;
+                objectFromDb.CarModel = product.CarModel;
                 objectFromDb.KilometresDriven = product.KilometresDriven;
                 objectFromDb.Price = product.Price;
                 objectFromDb.PowerInKilowatts = product.PowerInKilowatts;

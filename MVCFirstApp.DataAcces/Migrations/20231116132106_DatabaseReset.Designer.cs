@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231010201233_addedImageUrl")]
-    partial class addedImageUrl
+    [Migration("20231116132106_DatabaseReset")]
+    partial class DatabaseReset
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,12 @@ namespace MVCFirstApp.DataAcces.Migrations
                             Id = 5,
                             DisplayOrder = 5,
                             Name = "Hypersport"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DisplayOrder = 6,
+                            Name = "Combi"
                         });
                 });
 
@@ -90,11 +96,18 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("CarModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KilometresDriven")
@@ -120,7 +133,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 1,
                             Brand = "BMW",
+                            CarModel = "M3",
                             CategoryId = 1,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 106524,
                             PowerInKilowatts = 136,
@@ -131,7 +146,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
+                            CarModel = "M3",
                             CategoryId = 2,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 196524,
                             PowerInKilowatts = 128,
@@ -142,7 +159,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
+                            CarModel = "M3",
                             CategoryId = 3,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 326524,
                             PowerInKilowatts = 77,
@@ -153,7 +172,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
+                            CarModel = "M3",
                             CategoryId = 3,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 126524,
                             PowerInKilowatts = 84,
@@ -164,7 +185,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
+                            CarModel = "M3",
                             CategoryId = 3,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 136524,
                             PowerInKilowatts = 55,
@@ -175,7 +198,9 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
+                            CarModel = "M3",
                             CategoryId = 3,
+                            Description = "",
                             ImageUrl = "",
                             KilometresDriven = 116524,
                             PowerInKilowatts = 103,

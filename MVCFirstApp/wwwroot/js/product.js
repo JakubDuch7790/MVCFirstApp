@@ -8,6 +8,7 @@ function loadDataTable() {
         "ajax": { url: '/Admin/Product/Getall' },
         "columns": [
             { data: 'brand', "width": "15%" },
+            { data: 'carModel', "width": "15%" },
             { data: 'price', "width": "10%" },
             { data: 'kilometresDriven', "width": "15%" },
             { data: 'powerInKilowatts', "width": "10%" },

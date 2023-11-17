@@ -42,6 +42,9 @@ namespace MVCFirstApp.Models
         public Category Category { get; set; }
         [ValidateNever]
         public string? ImageUrl { get; set; }
+        //[Required]
+        [Display(Name = "Model")]
+        public string CarModel { get; set; }
 
 
     }

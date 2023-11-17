@@ -7,7 +7,7 @@
 namespace MVCFirstApp.DataAcces.Migrations
 {
     /// <inheritdoc />
-    public partial class DbReset : Migration
+    public partial class DatabaseReset : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,11 +33,14 @@ namespace MVCFirstApp.DataAcces.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Brand = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YearOfConstruction = table.Column<int>(type: "int", nullable: false),
                     KilometresDriven = table.Column<int>(type: "int", nullable: false),
                     PowerInKilowatts = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CarModel = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,20 +62,21 @@ namespace MVCFirstApp.DataAcces.Migrations
                     { 2, 2, "SUV" },
                     { 3, 3, "Hatchback" },
                     { 4, 4, "SuperSport" },
-                    { 5, 5, "Hypersport" }
+                    { 5, 5, "Hypersport" },
+                    { 6, 6, "Combi" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "Brand", "CategoryId", "KilometresDriven", "PowerInKilowatts", "Price", "YearOfConstruction" },
+                columns: new[] { "Id", "Brand", "CarModel", "CategoryId", "Description", "ImageUrl", "KilometresDriven", "PowerInKilowatts", "Price", "YearOfConstruction" },
                 values: new object[,]
                 {
-                    { 1, "BMW", 1, 106524, 136, 25000.0, 2014 },
-                    { 2, "Mercedes", 2, 196524, 128, 38000.0, 2016 },
-                    { 3, "Seat", 3, 326524, 77, 7500.0, 2013 },
-                    { 4, "Skoda", 3, 126524, 84, 3600.0, 2012 },
-                    { 5, "Suzuki", 3, 136524, 55, 500.0, 2004 },
-                    { 6, "Citroen", 3, 116524, 103, 2999.0, 2010 }
+                    { 1, "BMW", "M3", 1, "", "", 106524, 136, 25000.0, 2014 },
+                    { 2, "Mercedes", "M3", 2, "", "", 196524, 128, 38000.0, 2016 },
+                    { 3, "Seat", "M3", 3, "", "", 326524, 77, 7500.0, 2013 },
+                    { 4, "Skoda", "M3", 3, "", "", 126524, 84, 3600.0, 2012 },
+                    { 5, "Suzuki", "M3", 3, "", "", 136524, 55, 500.0, 2004 },
+                    { 6, "Citroen", "M3", 3, "", "", 116524, 103, 2999.0, 2010 }
                 });
 
             migrationBuilder.CreateIndex(

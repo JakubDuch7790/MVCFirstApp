@@ -93,6 +93,10 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("CarModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -101,7 +105,6 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KilometresDriven")
@@ -127,6 +130,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 1,
                             Brand = "BMW",
+                            CarModel = "M3",
                             CategoryId = 1,
                             Description = "",
                             ImageUrl = "",
@@ -139,6 +143,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
+                            CarModel = "M3",
                             CategoryId = 2,
                             Description = "",
                             ImageUrl = "",
@@ -151,6 +156,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
+                            CarModel = "M3",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -163,6 +169,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
+                            CarModel = "M3",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -175,6 +182,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
+                            CarModel = "M3",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -187,6 +195,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
+                            CarModel = "M3",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
