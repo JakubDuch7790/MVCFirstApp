@@ -13,6 +13,8 @@ namespace MVCFirstApp.DataAcces.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<Product> Product { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
