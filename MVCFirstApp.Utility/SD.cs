@@ -8,8 +8,8 @@ namespace MVCFirstApp.Utility;
 
 public static class SD
 {
-    public const string Role_User_Customer = "Customer";
-    public const string Role_User_Corpo = "Corporation";
+    public const string Role_Customer = "Customer";
+    public const string Role_Corpo = "Corporation";
     public const string Role_Admin = "Admin";
     public const string Role_Employee = "Employee";
 }
