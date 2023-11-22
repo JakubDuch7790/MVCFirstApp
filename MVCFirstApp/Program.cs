@@ -4,6 +4,8 @@ using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.DataAcces.Repository;
 using MVCFirstApp.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MVCFirstApp.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 builder.Services.AddRazorPages();
 //Register service to dependency injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
