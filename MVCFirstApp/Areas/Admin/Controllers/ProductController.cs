@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
+using MVCFirstApp.Utility;
+using System.Data;
 
 namespace MVCFirstApp.Areas.Admin.Controllers;
 
 [Area("Admin")]
-
+[Authorize(Roles = SD.Role_Admin)]
 public class ProductController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
