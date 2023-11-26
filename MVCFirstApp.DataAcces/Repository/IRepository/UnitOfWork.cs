@@ -10,8 +10,9 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
     public class UnitOfWork : IUnitOfWork
     {
         public ICategoryRepository Category { get;private set; }
-
         public IProductRepository Product { get; private set; }
+        public ICompanyRepository Company { get; private set; }
+
 
         private readonly ApplicationDbContext _db;
 
@@ -20,6 +21,7 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
             _db = db;
             Category = new CategoryRepository(_db);
             Product = new ProductRepository(_db);
+            Company = new CompanyRepository(_db);
 
         }
 
