@@ -22,7 +22,7 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
         }
     public IActionResult Index()
         {
-        List<Product> objCategoryList = _unitOfWork.Product.GetAll(includedProperties:"Category").ToList();
+        List<Company> objCategoryList = _unitOfWork.Company.GetAll(includedProperties:"Category").ToList();
 
         return View(objCategoryList);
         }
@@ -39,7 +39,7 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
                     Text = c.Name,
                     Value = c.Id.ToString(),
                 }),
-            Product = new Product()
+            Company = new Company()
             };
 
 
@@ -51,7 +51,7 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
         else
         {
             //update
-            productVM.Product = _unitOfWork.Product.Get(product => product.Id == id);
+            productVM.Company = _unitOfWork.Company.Get(Company => Company.Id == id);
             return View(productVM);
         }
 
@@ -67,12 +67,12 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
             if(file!= null)
             {
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string productPath = Path.Combine(wwwRootPath, @"images\product");
+                string productPath = Path.Combine(wwwRootPath, @"images\Company");
 
-                if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                if (!string.IsNullOrEmpty(productVM.Company.ImageUrl))
                 {
                     //delete old img
-                    var oldImgPath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+                    var oldImgPath = Path.Combine(wwwRootPath, productVM.Company.ImageUrl.TrimStart('\\'));
 
                     if (System.IO.File.Exists(oldImgPath))
                     {
@@ -85,19 +85,19 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
                     file.CopyTo(fileStream);
                 }
 
-                productVM.Product.ImageUrl = @"\images\product\" + fileName;
+                productVM.Company.ImageUrl = @"\images\Company\" + fileName;
             }
             
-            if (productVM.Product.Id == 0)
+            if (productVM.Company.Id == 0)
             {
-                _unitOfWork.Product.Add(productVM.Product);
+                _unitOfWork.Company.Add(productVM.Company);
             }
             else
             {
-                _unitOfWork.Product.Update(productVM.Product);
+                _unitOfWork.Company.Update(productVM.Company);
             }
             _unitOfWork.Save();
-            TempData["success"] = "Product successfully created";
+            TempData["success"] = "Company successfully created";
             return RedirectToAction("Index");
         }
         else
@@ -119,14 +119,14 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
     [HttpGet]
     public IActionResult GetAll()
     {
-        List<Product> objCategoryList = _unitOfWork.Product.GetAll(includedProperties: "Category").ToList();
+        List<Company> objCategoryList = _unitOfWork.Company.GetAll(includedProperties: "Category").ToList();
         return Json(new { data = objCategoryList });
     }
 
     [HttpDelete]
     public IActionResult Delete(int? id)
     {
-        var productToDelete = _unitOfWork.Product.Get(p =>  p.Id == id);
+        var productToDelete = _unitOfWork.Company.Get(p =>  p.Id == id);
 
         if (productToDelete == null)
         {
@@ -140,7 +140,7 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
             System.IO.File.Delete(oldImgPath);
         }
 
-        _unitOfWork.Product.Remove(productToDelete);
+        _unitOfWork.Company.Remove(productToDelete);
         _unitOfWork.Save();
 
         return Json(new { success = true, message = "Delete successful" });
