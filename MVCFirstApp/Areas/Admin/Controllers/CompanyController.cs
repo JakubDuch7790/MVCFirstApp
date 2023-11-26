@@ -22,43 +22,29 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
         }
     public IActionResult Index()
         {
-        List<Company> objCategoryList = _unitOfWork.Company.GetAll(includedProperties:"Category").ToList();
+        List<Company> objCategoryList = _unitOfWork.Company.GetAll().ToList();
 
         return View(objCategoryList);
         }
 
     public IActionResult Upsert(int? id)
-        {
-
-        ProductVM productVM = new()
-        {
-            CategoryList = _unitOfWork.Category.GetAll().Select(c =>
-
-            new SelectListItem
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString(),
-                }),
-            Company = new Company()
-            };
-
-
+    {
         if(id == null || id == 0)
         {
             //create
-            return View(productVM);
+            return View(new Company());
         }
         else
         {
             //update
-            productVM.Company = _unitOfWork.Company.Get(Company => Company.Id == id);
-            return View(productVM);
+            Company companyObj = _unitOfWork.Company.Get(Company => Company.Id == id);
+            return View(companyObj);
         }
 
-        }
+    }
 
     [HttpPost]
-    public IActionResult Upsert(ProductVM productVM, IFormFile? file)
+    public IActionResult Upsert(Company companyObj)
         {
         if (ModelState.IsValid)
         {
