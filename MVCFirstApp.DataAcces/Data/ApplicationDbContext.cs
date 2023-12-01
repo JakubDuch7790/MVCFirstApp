@@ -14,6 +14,7 @@ namespace MVCFirstApp.DataAcces.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        //fakke
 
 
 
