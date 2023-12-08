@@ -1,0 +1,70 @@
+﻿
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row ">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">
+                    Company List
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-2">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Company" asp-action="Upsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle-fill"></i> Add new Company
+                </a>
+            </div>
+
+        </div>
+        <table id="tableData" class="table table-bordered table-striped bg-body" style="width:100%">
+            <thead>
+                <tr align="center">
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        City
+                    </th>
+                    <th>
+                        Country
+                    </th>
+                    <th>
+                        PostalCode
+                    </th>
+                    <th>
+                        PhoneNumber
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+                        @*<td>
+                            <div class="w-auto btn-group" role="group">
+                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-auto">
+                                    <i class="bi bi-pencil-square"> Edit</i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="w-auto btn-group" role="group">
+                                <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-auto">
+                                    <i class="bi bi-trash3-fill"> Delete</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>*@
+        </table>
+    </div>
+    </div>
+
+    @section Scripts{
+
+        <script src="~/js/company.js"></script>
+    }
+
