@@ -26,7 +26,13 @@ namespace MVCFirstApp.DataAcces.Data
                 new Category { Id = 4, Name = "SuperSport", DisplayOrder = 4 },
                 new Category { Id = 5, Name = "Hypersport", DisplayOrder = 5 },
                 new Category { Id = 6, Name = "Combi", DisplayOrder = 6 }
+                );
 
+            modelBuilder.Entity<Company>().HasData(
+
+                new Company { Id = 1, Name = "Tech Solutions", StreetAdress = "PFB1", City = "Presov", Country = "Slovakia", PhoneNumber = "666999696969", PostalCode = "08001" },
+                new Company { Id = 2, Name = "Rear Differentials Kingdom", StreetAdress = "PFB1", City = "Presov", Country = "Slovakia", PhoneNumber = "666999696969", PostalCode = "08001" },
+                new Company { Id = 3, Name = "White Horse Group", StreetAdress = "PFB1", City = "Presov", Country = "Slovakia", PhoneNumber = "666999696969", PostalCode = "08001" }
                 );
 
             modelBuilder.Entity<Product>().HasData(
