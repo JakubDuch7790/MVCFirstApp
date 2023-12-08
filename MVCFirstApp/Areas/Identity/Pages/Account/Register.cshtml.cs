@@ -175,6 +175,11 @@ namespace MVCFirstApp.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.Country = Input.Country;
 
+                if(Input.Role == SD.Role_Corpo)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
