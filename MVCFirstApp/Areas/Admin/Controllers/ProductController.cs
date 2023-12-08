@@ -91,13 +91,14 @@ public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
             if (productVM.Product.Id == 0)
             {
                 _unitOfWork.Product.Add(productVM.Product);
+                TempData["success"] = "Product successfully created";
             }
             else
             {
                 _unitOfWork.Product.Update(productVM.Product);
+                TempData["success"] = "Product successfully updated";
             }
             _unitOfWork.Save();
-            TempData["success"] = "Product successfully created";
             return RedirectToAction("Index");
         }
         else
