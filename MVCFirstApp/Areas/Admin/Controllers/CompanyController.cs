@@ -14,11 +14,9 @@ namespace MVCFirstApp.Areas.Admin.Controllers;
 public class CompanyController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IWebHostEnvironment _webHostEnvironment;
-public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+    public CompanyController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _webHostEnvironment = webHostEnvironment;
         }
     public IActionResult Index()
         {
@@ -40,93 +38,52 @@ public CompanyController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvi
             Company companyObj = _unitOfWork.Company.Get(Company => Company.Id == id);
             return View(companyObj);
         }
-
     }
 
     [HttpPost]
     public IActionResult Upsert(Company companyObj)
-        {
+    {
         if (ModelState.IsValid)
         {
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-
-            if(file!= null)
+            if (companyObj.Id == 0)
             {
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                string productPath = Path.Combine(wwwRootPath, @"images\Company");
-
-                if (!string.IsNullOrEmpty(productVM.Company.ImageUrl))
-                {
-                    //delete old img
-                    var oldImgPath = Path.Combine(wwwRootPath, productVM.Company.ImageUrl.TrimStart('\\'));
-
-                    if (System.IO.File.Exists(oldImgPath))
-                    {
-                        System.IO.File.Delete(oldImgPath);
-                    }
-                }
-
-                using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-
-                productVM.Company.ImageUrl = @"\images\Company\" + fileName;
-            }
-            
-            if (productVM.Company.Id == 0)
-            {
-                _unitOfWork.Company.Add(productVM.Company);
+                _unitOfWork.Company.Add(companyObj);
+                TempData["success"] = "Company successfully created";
             }
             else
             {
-                _unitOfWork.Company.Update(productVM.Company);
+                _unitOfWork.Company.Update(companyObj);
+                TempData["success"] = "Company successfully updated";
             }
             _unitOfWork.Save();
-            TempData["success"] = "Company successfully created";
             return RedirectToAction("Index");
         }
         else
         {
-            productVM.CategoryList = _unitOfWork.Category.GetAll().Select(c =>
-
-                new SelectListItem
-                {
-                    Text = c.Name,
-                    Value = c.Id.ToString(),
-                });
-            };
-
-            return View(productVM);
+            return View(companyObj);
         }
+    }
 
     #region API CALLS
 
     [HttpGet]
     public IActionResult GetAll()
     {
-        List<Company> objCategoryList = _unitOfWork.Company.GetAll(includedProperties: "Category").ToList();
+        List<Company> objCategoryList = _unitOfWork.Company.GetAll().ToList();
         return Json(new { data = objCategoryList });
     }
 
     [HttpDelete]
     public IActionResult Delete(int? id)
     {
-        var productToDelete = _unitOfWork.Company.Get(p =>  p.Id == id);
+        var companyToDelete = _unitOfWork.Company.Get(c =>  c.Id == id);
 
-        if (productToDelete == null)
+        if (companyToDelete == null)
         {
             return Json(new { success = false, message = "Error while deleting" });
         }
 
-        var oldImgPath = Path.Combine(_webHostEnvironment.WebRootPath, productToDelete.ImageUrl.TrimStart('\\'));
-
-        if (System.IO.File.Exists(oldImgPath))
-        {
-            System.IO.File.Delete(oldImgPath);
-        }
-
-        _unitOfWork.Company.Remove(productToDelete);
+        _unitOfWork.Company.Remove(companyToDelete);
         _unitOfWork.Save();
 
         return Json(new { success = true, message = "Delete successful" });
