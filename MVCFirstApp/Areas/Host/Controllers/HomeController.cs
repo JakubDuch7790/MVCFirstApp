@@ -25,9 +25,14 @@ namespace MVCFirstApp.Areas.Host.Controllers
         }
         public IActionResult Details(int id)
         {
-            Product product = _unitOfWork.Product.Get(p => p.Id==id, includedProperties: "Category");
+            ShoppingCart shoppingCart = new()
+            {
+                Product = _unitOfWork.Product.Get(p => p.Id==id, includedProperties: "Category"),
+                Count = 1,
+                ProductId = id
+            };
 
-            return View(product);
+            return View(shoppingCart);
         }
 
         public IActionResult Privacy()

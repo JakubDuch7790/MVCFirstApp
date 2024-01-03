@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ShoppingCart
 
 
 <form method="post">
@@ -6,8 +6,8 @@
         <div class="card-header bg-secondary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.Brand</h3>
-                    <p class="text-white-50 fw-semibold mb-0">@Model.CarModel</p>
+                    <h3 class="text-white text-uppercase">@Model.Product.Brand</h3>
+                    <p class="text-white-50 fw-semibold mb-0">@Model.Product.CarModel</p>
                 </div>
             </div>
         </div>
@@ -22,29 +22,29 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-3 offset-lg-1 text-center mb-3">
-                        <img src="@Model.ImageUrl" width="100%" class="rounded" />
+                        <img src="@Model.Product.ImageUrl" width="100%" class="rounded" />
                     </div>
                     <div class="col-12 col-lg-6 offset-lg-1">
 
                         <div class="col-12 col-md-6 pb-4">
-                            <span class="badge">@Model.Category.Name</span>
+                            <span class="badge">@Model.Product.Category.Name</span>
                         </div>
                         <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">Power : @Model.PowerInKilowatts KW</h6>
-                        </div>
-
-                        <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">Year of Construction : @Model.YearOfConstruction</h6>
+                            <h6 class="text-dark text-opacity-50 ">Power : @Model.Product.PowerInKilowatts KW</h6>
                         </div>
 
                         <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">Driven Km : @Model.KilometresDriven</h6>
+                            <h6 class="text-dark text-opacity-50 ">Year of Construction : @Model.Product.YearOfConstruction</h6>
+                        </div>
+
+                        <div class="row ps-2">
+                            <h6 class="text-dark text-opacity-50 ">Driven Km : @Model.Product.KilometresDriven</h6>
                         </div>
                         <div class="row ps-2">
                             <h6 class="text-dark text-opacity-50  pb-2">
                                 List Price:
                                 <span class="text-decoration-line-through">
-                                    @Model.Price €
+                                    @Model.Product.Price €
                                 </span>
                             </h6>
                         </div>
@@ -53,16 +53,16 @@
                                 <div>Price</div>
                             </div>
                             <div class="p-1 col-3 col-lg-2 bg-black text-warning fw-bold">
-                                <div>@Model.Price €</div>
+                                <div>@Model.Product.Price €</div>
                             </div>
 
                         </div>
                         <div class="row pl-2 my-3">
-                            <p class="text-secondary lh-sm">@Html.Raw(Model.Description)</p>
+                            <p class="text-secondary lh-sm">@Html.Raw(Model.Product.Description)</p>
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" disabled
+                                <button type="submit" 
                                         class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">
                                     Buy Now
                                 </button>
