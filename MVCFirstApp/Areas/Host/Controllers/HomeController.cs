@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MVCFirstApp.Areas.Host.Controllers
 {
@@ -27,10 +29,24 @@ namespace MVCFirstApp.Areas.Host.Controllers
         {
             ShoppingCart shoppingCart = new()
             {
-                Product = _unitOfWork.Product.Get(p => p.Id==id, includedProperties: "Category"),
+                Product = _unitOfWork.Product.Get(p => p.Id == id, includedProperties: "Category"),
                 Count = 1,
                 ProductId = id
             };
+
+            return View(shoppingCart);
+        }
+        [HttpPost]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            shoppingCart.ApplicationUserId = userId;
+
+            _unitOfWork.ShoppingCart.Add(shoppingCart);
+            _unitOfWork.Save();
 
             return View(shoppingCart);
         }
