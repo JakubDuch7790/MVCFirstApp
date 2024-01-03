@@ -48,7 +48,7 @@ namespace MVCFirstApp.Areas.Host.Controllers
             _unitOfWork.ShoppingCart.Add(shoppingCart);
             _unitOfWork.Save();
 
-            return View(shoppingCart);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
