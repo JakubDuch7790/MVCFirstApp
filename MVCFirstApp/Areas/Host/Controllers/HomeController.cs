@@ -40,8 +40,11 @@ namespace MVCFirstApp.Areas.Host.Controllers
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
+            shoppingCart.Id = 0;
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+
 
             shoppingCart.ApplicationUserId = userId;
 

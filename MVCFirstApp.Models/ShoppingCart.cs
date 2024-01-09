@@ -18,7 +18,9 @@ namespace MVCFirstApp.Models
         public Product Product { get; set; }
         [Range (1, 3, ErrorMessage ="You have reached the limit, If you want to buy more please open another transaction.")]
         public int Count { get; set; }
-        public string ApplicationUserId { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string? ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
