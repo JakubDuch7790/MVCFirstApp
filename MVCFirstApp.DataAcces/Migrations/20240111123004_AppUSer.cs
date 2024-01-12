@@ -5,7 +5,7 @@
 namespace MVCFirstApp.DataAcces.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityInsertSetToOnInShoppingCart : Migration
+    public partial class AppUSer : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

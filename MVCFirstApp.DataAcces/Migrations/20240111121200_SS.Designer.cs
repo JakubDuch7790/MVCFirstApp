@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231126222305_AddCompanyToDB")]
-    partial class AddCompanyToDB
+    [Migration("20240111121200_SS")]
+    partial class SS
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,6 +114,38 @@ namespace MVCFirstApp.DataAcces.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "Tech Solutions",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "Rear Differentials Kingdom",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "White Horse Group",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        });
                 });
 
             modelBuilder.Entity("MVCFirstApp.Models.Product", b =>
@@ -179,7 +211,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
-                            CarModel = "M3",
+                            CarModel = "GLE",
                             CategoryId = 2,
                             Description = "",
                             ImageUrl = "",
@@ -192,7 +224,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
-                            CarModel = "M3",
+                            CarModel = "Ibiza",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -205,7 +237,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
-                            CarModel = "M3",
+                            CarModel = "Felicia",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -218,7 +250,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
-                            CarModel = "M3",
+                            CarModel = "Swift",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -231,7 +263,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
-                            CarModel = "M3",
+                            CarModel = "C5",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -240,6 +272,34 @@ namespace MVCFirstApp.DataAcces.Migrations
                             Price = 2999.0,
                             YearOfConstruction = 2010
                         });
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -455,6 +515,10 @@ namespace MVCFirstApp.DataAcces.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CompanyId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
@@ -468,6 +532,8 @@ namespace MVCFirstApp.DataAcces.Migrations
                     b.Property<string>("StreetAdress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
@@ -480,6 +546,25 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("MVCFirstApp.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MVCFirstApp.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -531,6 +616,17 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("MVCFirstApp.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MVCFirstApp.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 
 namespace MVCFirstApp.DataAcces.Data
 {
@@ -38,12 +40,13 @@ namespace MVCFirstApp.DataAcces.Data
 
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Brand = "BMW", YearOfConstruction = 2014, Description = "", KilometresDriven = 106524, PowerInKilowatts = 136, Price = 25000, CategoryId= 1, ImageUrl="", CarModel="M3"},
-                new Product { Id = 2, Brand = "Mercedes", Description = "", YearOfConstruction = 2016, KilometresDriven = 196524, PowerInKilowatts = 128, Price = 38000, CategoryId = 2, ImageUrl = "", CarModel = "M3" },
-                new Product { Id = 3, Brand = "Seat", Description = "", YearOfConstruction = 2013, KilometresDriven = 326524, PowerInKilowatts = 77, Price = 7500, CategoryId = 3, ImageUrl = "", CarModel = "M3" },
-                new Product { Id = 4, Brand = "Skoda", Description = "", YearOfConstruction = 2012, KilometresDriven = 126524, PowerInKilowatts = 84, Price = 3600, CategoryId = 3, ImageUrl = "", CarModel = "M3" },
-                new Product { Id = 5, Brand = "Suzuki", Description = "", YearOfConstruction = 2004, KilometresDriven = 136524, PowerInKilowatts = 55, Price = 500, CategoryId = 3, ImageUrl = "", CarModel = "M3" },
-                new Product { Id = 6, Brand = "Citroen", Description = "", YearOfConstruction = 2010, KilometresDriven = 116524, PowerInKilowatts = 103, Price = 2999, CategoryId = 3, ImageUrl = "", CarModel = "M3" }
+                new Product { Id = 2, Brand = "Mercedes", Description = "", YearOfConstruction = 2016, KilometresDriven = 196524, PowerInKilowatts = 128, Price = 38000, CategoryId = 2, ImageUrl = "", CarModel = "GLE" },
+                new Product { Id = 3, Brand = "Seat", Description = "", YearOfConstruction = 2013, KilometresDriven = 326524, PowerInKilowatts = 77, Price = 7500, CategoryId = 3, ImageUrl = "", CarModel = "Ibiza" },
+                new Product { Id = 4, Brand = "Skoda", Description = "", YearOfConstruction = 2012, KilometresDriven = 126524, PowerInKilowatts = 84, Price = 3600, CategoryId = 3, ImageUrl = "", CarModel = "Felicia" },
+                new Product { Id = 5, Brand = "Suzuki", Description = "", YearOfConstruction = 2004, KilometresDriven = 136524, PowerInKilowatts = 55, Price = 500, CategoryId = 3, ImageUrl = "", CarModel = "Swift" },
+                new Product { Id = 6, Brand = "Citroen", Description = "", YearOfConstruction = 2010, KilometresDriven = 116524, PowerInKilowatts = 103, Price = 2999, CategoryId = 3, ImageUrl = "", CarModel = "C5" }
                 );
+            //modelBuilder.Entity<ShoppingCart>().Property(p => p.Id).HasValueGeneratorFactory()
         }
     }
 }

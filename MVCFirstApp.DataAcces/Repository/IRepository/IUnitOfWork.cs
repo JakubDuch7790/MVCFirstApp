@@ -15,5 +15,7 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
         IApplicationUserRepository ApplicationUser { get; }
 
         void Save();
+        void SetIdentityInsertON();
+        void SetIdentityInsertOFF();
     }
 }

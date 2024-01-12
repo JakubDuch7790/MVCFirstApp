@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231121153421_AddIDentity")]
-    partial class AddIDentity
+    [Migration("20240111085648_DBReset")]
+    partial class DBReset
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,70 @@ namespace MVCFirstApp.DataAcces.Migrations
                         });
                 });
 
+            modelBuilder.Entity("MVCFirstApp.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAdress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "Tech Solutions",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "Rear Differentials Kingdom",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Presov",
+                            Country = "Slovakia",
+                            Name = "White Horse Group",
+                            PhoneNumber = "666999696969",
+                            PostalCode = "08001",
+                            StreetAdress = "PFB1"
+                        });
+                });
+
             modelBuilder.Entity("MVCFirstApp.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -147,7 +211,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
-                            CarModel = "M3",
+                            CarModel = "GLE",
                             CategoryId = 2,
                             Description = "",
                             ImageUrl = "",
@@ -160,7 +224,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
-                            CarModel = "M3",
+                            CarModel = "Ibiza",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -173,7 +237,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
-                            CarModel = "M3",
+                            CarModel = "Felicia",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -186,7 +250,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
-                            CarModel = "M3",
+                            CarModel = "Swift",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -199,7 +263,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
-                            CarModel = "M3",
+                            CarModel = "C5",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -208,6 +272,27 @@ namespace MVCFirstApp.DataAcces.Migrations
                             Price = 2999.0,
                             YearOfConstruction = 2010
                         });
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -274,6 +359,10 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -325,6 +414,10 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -355,12 +448,10 @@ namespace MVCFirstApp.DataAcces.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -397,12 +488,10 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -410,6 +499,35 @@ namespace MVCFirstApp.DataAcces.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompanyId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAdress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("MVCFirstApp.Models.Product", b =>
@@ -421,6 +539,17 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("MVCFirstApp.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -472,6 +601,17 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MVCFirstApp.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("MVCFirstApp.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

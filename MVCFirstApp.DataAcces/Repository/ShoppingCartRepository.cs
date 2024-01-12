@@ -1,4 +1,5 @@
-﻿using MVCFirstApp.DataAcces.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MVCFirstApp.DataAcces.Data;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using System;

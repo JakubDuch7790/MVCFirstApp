@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240102215912_ShoppingCartSeedtoDb")]
-    partial class ShoppingCartSeedtoDb
+    [Migration("20240111123004_AppUSer")]
+    partial class AppUSer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,7 +211,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 2,
                             Brand = "Mercedes",
-                            CarModel = "M3",
+                            CarModel = "GLE",
                             CategoryId = 2,
                             Description = "",
                             ImageUrl = "",
@@ -224,7 +224,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 3,
                             Brand = "Seat",
-                            CarModel = "M3",
+                            CarModel = "Ibiza",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -237,7 +237,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 4,
                             Brand = "Skoda",
-                            CarModel = "M3",
+                            CarModel = "Felicia",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -250,7 +250,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 5,
                             Brand = "Suzuki",
-                            CarModel = "M3",
+                            CarModel = "Swift",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -263,7 +263,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                         {
                             Id = 6,
                             Brand = "Citroen",
-                            CarModel = "M3",
+                            CarModel = "C5",
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
@@ -284,6 +284,7 @@ namespace MVCFirstApp.DataAcces.Migrations
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Count")
@@ -356,6 +357,7 @@ namespace MVCFirstApp.DataAcces.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")

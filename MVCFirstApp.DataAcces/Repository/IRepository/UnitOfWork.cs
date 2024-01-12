@@ -1,4 +1,6 @@
-﻿using MVCFirstApp.DataAcces.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MVCFirstApp.DataAcces.Data;
+using MVCFirstApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +33,17 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
         {
             _db.SaveChanges();
         }
+        public void SetIdentityInsertON()
+        {
+            _db.Database.OpenConnection();
+            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts ON");
+        }
+        public void SetIdentityInsertOFF()
+        {
+
+            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts OFF");
+            _db.Database.CloseConnection();
+        }
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using MVCFirstApp.DataAcces.Data;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using System.Diagnostics;
@@ -31,7 +33,7 @@ namespace MVCFirstApp.Areas.Host.Controllers
             {
                 Product = _unitOfWork.Product.Get(p => p.Id == id, includedProperties: "Category"),
                 Count = 1,
-                ProductId = id
+                ProductId = id,
             };
 
             return View(shoppingCart);
@@ -40,16 +42,22 @@ namespace MVCFirstApp.Areas.Host.Controllers
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
-            shoppingCart.Id = 0;
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
+
+            //Turbokokot bug fix
+            //shoppingCart.Id = 0;
+
+            var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-
-
             shoppingCart.ApplicationUserId = userId;
 
+
+            //ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId
+            //&& u.ProductId == shoppingCart.ProductId);
+
+            _unitOfWork.SetIdentityInsertON();
             _unitOfWork.ShoppingCart.Add(shoppingCart);
             _unitOfWork.Save();
+            _unitOfWork.SetIdentityInsertOFF();
 
             return RedirectToAction(nameof(Index));
         }
@@ -64,5 +72,10 @@ namespace MVCFirstApp.Areas.Host.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //private void AuthUser(string username, string password)
+        //{
+        //    _unitOfWork.ShoppingCart.
+        //}
+
     }
 }
