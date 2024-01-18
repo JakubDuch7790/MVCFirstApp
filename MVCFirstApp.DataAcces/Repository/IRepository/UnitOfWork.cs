@@ -35,14 +35,37 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
         }
         public void SetIdentityInsertON()
         {
-            _db.Database.OpenConnection();
+            _db.Database.BeginTransaction();
             _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts ON");
         }
         public void SetIdentityInsertOFF()
         {
 
             _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts OFF");
-            _db.Database.CloseConnection();
+            _db.Database.CommitTransaction();
+        }
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            //var newArray = 
+            var newList = new List<int>();
+            int k = 0;
+
+            for (int i = 0; i < nums1.Length; i++)
+            {
+                newList.Add(nums1[i]);
+                if (i < nums2.Length - 1)
+                {
+                    k++;
+                }
+                else
+                {
+
+                }
+
+            }
+            newList.ToArray();
+
+
         }
 
     }

@@ -32,9 +32,11 @@ namespace MVCFirstApp.Areas.Host.Controllers
             ShoppingCart shoppingCart = new()
             {
                 Product = _unitOfWork.Product.Get(p => p.Id == id, includedProperties: "Category"),
-                Count = 1,
                 ProductId = id,
             };
+
+            ModelState.Remove("Id");
+            //ModelState.Clear();
 
             return View(shoppingCart);
         }
@@ -54,10 +56,10 @@ namespace MVCFirstApp.Areas.Host.Controllers
             //ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId
             //&& u.ProductId == shoppingCart.ProductId);
 
-            _unitOfWork.SetIdentityInsertON();
+            //_unitOfWork.SetIdentityInsertON();
             _unitOfWork.ShoppingCart.Add(shoppingCart);
             _unitOfWork.Save();
-            _unitOfWork.SetIdentityInsertOFF();
+            //_unitOfWork.SetIdentityInsertOFF();
 
             return RedirectToAction(nameof(Index));
         }
@@ -72,10 +74,5 @@ namespace MVCFirstApp.Areas.Host.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        //private void AuthUser(string username, string password)
-        //{
-        //    _unitOfWork.ShoppingCart.
-        //}
-
     }
 }

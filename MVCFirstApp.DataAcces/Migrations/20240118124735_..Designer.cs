@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240111123004_AppUSer")]
-    partial class AppUSer
+    [Migration("20240118124735_.")]
+    partial class _
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -287,9 +287,6 @@ namespace MVCFirstApp.DataAcces.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -357,7 +354,6 @@ namespace MVCFirstApp.DataAcces.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
