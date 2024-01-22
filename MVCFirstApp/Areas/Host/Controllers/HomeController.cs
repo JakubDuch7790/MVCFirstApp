@@ -44,10 +44,6 @@ namespace MVCFirstApp.Areas.Host.Controllers
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
-
-            //Turbokokot bug fix
-            //shoppingCart.Id = 0;
-
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
@@ -56,14 +52,16 @@ namespace MVCFirstApp.Areas.Host.Controllers
             //ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId
             //&& u.ProductId == shoppingCart.ProductId);
 
-            //_unitOfWork.SetIdentityInsertON();
             _unitOfWork.ShoppingCart.Add(shoppingCart);
             _unitOfWork.Save();
-            //_unitOfWork.SetIdentityInsertOFF();
 
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Summary()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
