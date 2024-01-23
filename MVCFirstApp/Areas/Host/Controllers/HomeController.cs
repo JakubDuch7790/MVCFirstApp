@@ -60,9 +60,13 @@ namespace MVCFirstApp.Areas.Host.Controllers
             //else
             //{
             //    //add a cart
+            //_unitOfWork.ShoppingCart.Add(shoppingCart);
+
 
             //}
             _unitOfWork.ShoppingCart.Add(shoppingCart);
+
+            TempData["success"] = "Product has been successfully added to your Cart";
 
             _unitOfWork.Save();
 

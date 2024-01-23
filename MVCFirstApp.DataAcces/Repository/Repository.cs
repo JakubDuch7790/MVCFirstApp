@@ -28,10 +28,22 @@ namespace MVCFirstApp.DataAcces.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includedProperties)
+        public T Get(Expression<Func<T, bool>> filter, string? includedProperties, bool tracked = false)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<T> query;
+
+            if (tracked)
+            {
+                query = dbSet;
+            }
+
+            else
+            {
+                query = dbSet.AsNoTracking();
+            }
+
             query = query.Where(filter);
+
             if (!string.IsNullOrEmpty(includedProperties))
             {
                 foreach (var includedProperty in includedProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -39,6 +51,7 @@ namespace MVCFirstApp.DataAcces.Repository
                     query = query.Include(includedProperty);
                 }
             }
+
             return query.FirstOrDefault();
         }
         public IEnumerable<T> GetAll(string? includedProperties)
