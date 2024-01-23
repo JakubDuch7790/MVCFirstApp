@@ -37,10 +37,13 @@ public class CartController : Controller
         return View(ShoppingCartVM);
     }
 
-    //private double GetPrice(ShoppingCart cart)
-    //{
-    //    return cart.Product.Price;
-    //}
+    public IActionResult Remove(int cartId) {
+        var cartToRemove = _unitOfWork.ShoppingCart.Get(u => u.Id== cartId);
+        _unitOfWork.ShoppingCart.Remove(cartToRemove);
+        _unitOfWork.Save();
+        return RedirectToAction(nameof(Index));
+    }
+
 
 
 }
