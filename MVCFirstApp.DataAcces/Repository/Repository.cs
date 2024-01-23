@@ -54,9 +54,15 @@ namespace MVCFirstApp.DataAcces.Repository
 
             return query.FirstOrDefault();
         }
-        public IEnumerable<T> GetAll(string? includedProperties)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includedProperties)
         {
             IQueryable<T> query = dbSet;
+
+            if(filter != null)
+            {
+                query = query.Where(filter);
+            }
+
             if (!string.IsNullOrEmpty(includedProperties))
             {
                 foreach(var includedProperty in includedProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))

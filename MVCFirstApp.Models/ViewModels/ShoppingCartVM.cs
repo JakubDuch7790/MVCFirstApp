@@ -10,8 +10,9 @@ namespace MVCFirstApp.Models.ViewModels;
 
 public class ShoppingCartVM
 {
-    public ShoppingCart ShoppingCart { get; set; }
+    //public ShoppingCart ShoppingCart { get; set; }
 
     [ValidateNever]
-    public IEnumerable<SelectListItem> ShoppingCartList { get; set; }
+    public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
+    public double OrderTotal { get; set; }
 }
