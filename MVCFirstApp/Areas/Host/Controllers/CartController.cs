@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Repository.IRepository;
+using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
 using System.Security.Claims;
 
@@ -26,6 +27,20 @@ public class CartController : Controller
             ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product"),
         };
 
+        foreach(var cart in ShoppingCartVM.ShoppingCartList)
+        {
+            cart.Price = cart.Product.Price;
+
+            ShoppingCartVM.OrderTotal += cart.Price;
+        }
+
         return View(ShoppingCartVM);
     }
+
+    //private double GetPrice(ShoppingCart cart)
+    //{
+    //    return cart.Product.Price;
+    //}
+
+
 }
