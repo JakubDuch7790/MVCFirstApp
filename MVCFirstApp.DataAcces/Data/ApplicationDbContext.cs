@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MVCFirstApp.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection.Metadata;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MVCFirstApp.DataAcces.Data
 {
@@ -46,11 +47,14 @@ namespace MVCFirstApp.DataAcces.Data
                 new Product { Id = 5, Brand = "Suzuki", Description = "", YearOfConstruction = 2004, KilometresDriven = 136524, PowerInKilowatts = 55, Price = 500, CategoryId = 3, ImageUrl = "", CarModel = "Swift" },
                 new Product { Id = 6, Brand = "Citroen", Description = "", YearOfConstruction = 2010, KilometresDriven = 116524, PowerInKilowatts = 103, Price = 2999, CategoryId = 3, ImageUrl = "", CarModel = "C5" }
                 );
+            modelBuilder.Entity<Product>()
+                .Property(b => b.IsAvailable)
+                .HasDefaultValue(true);
             //modelBuilder.Entity<ShoppingCart>().Property(x => x.Id)
             //        .HasColumnName("Id")
             //        .HasColumnType("int")
             //        .ValueGeneratedOnAdd();
-                    //* *.UseIdentityColumn(); **
+            //* *.UseIdentityColumn(); **
             //modelBuilder.Entity<ShoppingCart>().Property(p => p.Id).HasValueGenerator
         }
     }

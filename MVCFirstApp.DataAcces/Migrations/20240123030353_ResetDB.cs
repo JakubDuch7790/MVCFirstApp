@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     /// <inheritdoc />
-    public partial class _ : Migration
+    public partial class ResetDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,7 +94,8 @@ namespace MVCFirstApp.DataAcces.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CarModel = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CarModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,15 +282,15 @@ namespace MVCFirstApp.DataAcces.Migrations
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "Brand", "CarModel", "CategoryId", "Description", "ImageUrl", "KilometresDriven", "PowerInKilowatts", "Price", "YearOfConstruction" },
+                columns: new[] { "Id", "Brand", "CarModel", "CategoryId", "Description", "ImageUrl", "IsAvailable", "KilometresDriven", "PowerInKilowatts", "Price", "YearOfConstruction" },
                 values: new object[,]
                 {
-                    { 1, "BMW", "M3", 1, "", "", 106524, 136, 25000.0, 2014 },
-                    { 2, "Mercedes", "GLE", 2, "", "", 196524, 128, 38000.0, 2016 },
-                    { 3, "Seat", "Ibiza", 3, "", "", 326524, 77, 7500.0, 2013 },
-                    { 4, "Skoda", "Felicia", 3, "", "", 126524, 84, 3600.0, 2012 },
-                    { 5, "Suzuki", "Swift", 3, "", "", 136524, 55, 500.0, 2004 },
-                    { 6, "Citroen", "C5", 3, "", "", 116524, 103, 2999.0, 2010 }
+                    { 1, "BMW", "M3", 1, "", "", false, 106524, 136, 25000.0, 2014 },
+                    { 2, "Mercedes", "GLE", 2, "", "", false, 196524, 128, 38000.0, 2016 },
+                    { 3, "Seat", "Ibiza", 3, "", "", false, 326524, 77, 7500.0, 2013 },
+                    { 4, "Skoda", "Felicia", 3, "", "", false, 126524, 84, 3600.0, 2012 },
+                    { 5, "Suzuki", "Swift", 3, "", "", false, 136524, 55, 500.0, 2004 },
+                    { 6, "Citroen", "C5", 3, "", "", false, 116524, 103, 2999.0, 2010 }
                 });
 
             migrationBuilder.CreateIndex(

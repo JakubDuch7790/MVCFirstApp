@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCFirstApp.DataAcces.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240118124735_.")]
-    partial class _
+    [Migration("20240123104610_SetDefaultValueOfEntityProperty")]
+    partial class SetDefaultValueOfEntityProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,6 +175,11 @@ namespace MVCFirstApp.DataAcces.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsAvailable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<int>("KilometresDriven")
                         .HasColumnType("int");
 
@@ -202,6 +207,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 1,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 106524,
                             PowerInKilowatts = 136,
                             Price = 25000.0,
@@ -215,6 +221,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 2,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 196524,
                             PowerInKilowatts = 128,
                             Price = 38000.0,
@@ -228,6 +235,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 326524,
                             PowerInKilowatts = 77,
                             Price = 7500.0,
@@ -241,6 +249,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 126524,
                             PowerInKilowatts = 84,
                             Price = 3600.0,
@@ -254,6 +263,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 136524,
                             PowerInKilowatts = 55,
                             Price = 500.0,
@@ -267,6 +277,7 @@ namespace MVCFirstApp.DataAcces.Migrations
                             CategoryId = 3,
                             Description = "",
                             ImageUrl = "",
+                            IsAvailable = false,
                             KilometresDriven = 116524,
                             PowerInKilowatts = 103,
                             Price = 2999.0,

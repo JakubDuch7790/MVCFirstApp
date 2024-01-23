@@ -45,6 +45,7 @@ namespace MVCFirstApp.Models
         [Required]
         [Display(Name = "Model")]
         public string CarModel { get; set; }
+        public bool IsAvailable { get; set; }
 
 
     }

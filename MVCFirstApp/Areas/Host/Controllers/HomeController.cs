@@ -52,7 +52,18 @@ namespace MVCFirstApp.Areas.Host.Controllers
             //ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId
             //&& u.ProductId == shoppingCart.ProductId);
 
+            //if(cartFromDb != null)
+            //{
+            //    //cart already exists
+            //    _unitOfWork.ShoppingCart.Update(cartFromDb);
+            //}
+            //else
+            //{
+            //    //add a cart
+
+            //}
             _unitOfWork.ShoppingCart.Add(shoppingCart);
+
             _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
