@@ -44,6 +44,11 @@ public class CartController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    public IActionResult Summary()
+    {
+        return View();
+    }
+
 
 
 }
