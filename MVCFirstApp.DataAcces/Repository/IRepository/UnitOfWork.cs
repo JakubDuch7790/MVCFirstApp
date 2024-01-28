@@ -16,6 +16,8 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
         public ICompanyRepository Company { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOrderDetailRepository OrderDetail { get; private set; }
+        public IOrderHeaderRepository OrderHeader { get; private set; }
 
         private readonly ApplicationDbContext _db;
 
@@ -27,6 +29,8 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
             Company = new CompanyRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
+            OrderDetail = new OrderDetailRepository(_db);
+            OrderHeader = new OrderHeaderRepository(_db);
         }
 
         public void Save()
@@ -44,29 +48,5 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
             _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts OFF");
             _db.Database.CommitTransaction();
         }
-        public void Merge(int[] nums1, int m, int[] nums2, int n)
-        {
-            //var newArray = 
-            var newList = new List<int>();
-            int k = 0;
-
-            for (int i = 0; i < nums1.Length; i++)
-            {
-                newList.Add(nums1[i]);
-                if (i < nums2.Length - 1)
-                {
-                    k++;
-                }
-                else
-                {
-
-                }
-
-            }
-            newList.ToArray();
-
-
-        }
-
     }
 }
