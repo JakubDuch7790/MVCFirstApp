@@ -12,7 +12,10 @@ namespace MVCFirstApp.Areas.Host.Controllers;
 public class CartController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
-    public ShoppingCartVM ShoppingCartVM { get; set; }
+
+	[BindProperty]
+	public ShoppingCartVM ShoppingCartVM { get; set; }
+
     public CartController(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
@@ -45,35 +48,60 @@ public class CartController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Summary()
-    {
-        var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+	public IActionResult Summary()
+	{
+		var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+		var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-        ShoppingCartVM = new()
-        {
-            ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product"),
-            OrderHeader = new()
-        };
+		ShoppingCartVM = new()
+		{
+			ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product"),
+			OrderHeader = new()
+		};
 
-        ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id ==  userId);
+		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-        ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
-        ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
-        ShoppingCartVM.OrderHeader.Country = ShoppingCartVM.OrderHeader.ApplicationUser.Country;
-        ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
-        ShoppingCartVM.OrderHeader.StreetAdress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
+		ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+		ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
+		ShoppingCartVM.OrderHeader.Country = ShoppingCartVM.OrderHeader.ApplicationUser.Country;
+		ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+		ShoppingCartVM.OrderHeader.StreetAdress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
 
 
-        foreach (var cart in ShoppingCartVM.ShoppingCartList)
-        {
-            cart.Price = cart.Product.Price;
+		foreach (var cart in ShoppingCartVM.ShoppingCartList)
+		{
+			cart.Price = cart.Product.Price;
 
-            ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
-        }
+			ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
+		}
 
-        return View(ShoppingCartVM);
-    }
+		return View(ShoppingCartVM);
+	}
+	[HttpPost]
+	[ActionName("Summary")]
+	public IActionResult SummaryPOST(ShoppingCartVM shoppingCartVM)
+	{
+		var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+		var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+		ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product");
+
+		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+
+		ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
+		ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
+
+		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
+
+		foreach (var cart in ShoppingCartVM.ShoppingCartList)
+		{
+			cart.Price = cart.Product.Price;
+
+			ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
+		}
+
+		return View(ShoppingCartVM);
+	}
 
 
 
