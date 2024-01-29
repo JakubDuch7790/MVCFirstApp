@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
+using MVCFirstApp.Utility;
 using System.Security.Claims;
 
 namespace MVCFirstApp.Areas.Host.Controllers;
@@ -100,6 +101,34 @@ public class CartController : Controller
 			ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
 		}
 
+		if(ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+		{
+			//Regular Customer
+			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+		}
+		else
+		{
+			//Company
+			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+		}
+
+		_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+		_unitOfWork.Save();
+
+		foreach(var cart in ShoppingCartVM.ShoppingCartList)
+		{
+			OrderDetail orderDetail = new()
+			{
+				ProductId = cart.ProductId,
+				OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
+				Price = cart.Price,
+			};
+
+			_unitOfWork.OrderDetail.Add(orderDetail);
+			_unitOfWork.Save();
+		}
 		return View(ShoppingCartVM);
 	}
 
