@@ -169,6 +169,7 @@ namespace MVCFirstApp.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 user.Name = Input.Name;
+                user.StreetAdress = Input.StreetAdress;
                 user.Country = Input.Country;
                 user.PhoneNumber = Input.Phonenumber;
                 user.City = Input.City;
