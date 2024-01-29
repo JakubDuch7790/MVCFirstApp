@@ -19,7 +19,7 @@ public class OrderHeader
 
     public DateTime OrderDate { get; set; }
     public DateTime ShippingDay { get; set; }
-    public int OrderToral { get; set; }
+    public double OrderTotal { get; set; }
 
     public string? OrderStatus { get; set; }
     public string? PaymentStatus { get; set; }

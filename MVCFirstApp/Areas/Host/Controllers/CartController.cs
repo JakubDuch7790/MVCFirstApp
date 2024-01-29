@@ -25,13 +25,14 @@ public class CartController : Controller
         ShoppingCartVM = new()
         {
             ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product"),
+            OrderHeader = new()
         };
 
         foreach(var cart in ShoppingCartVM.ShoppingCartList)
         {
             cart.Price = cart.Product.Price;
 
-            ShoppingCartVM.OrderTotal += cart.Price;
+            ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
         }
 
         return View(ShoppingCartVM);
@@ -46,7 +47,32 @@ public class CartController : Controller
 
     public IActionResult Summary()
     {
-        return View();
+        var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        ShoppingCartVM = new()
+        {
+            ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product"),
+            OrderHeader = new()
+        };
+
+        ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id ==  userId);
+
+        ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+        ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
+        ShoppingCartVM.OrderHeader.Country = ShoppingCartVM.OrderHeader.ApplicationUser.Country;
+        ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+        ShoppingCartVM.OrderHeader.StreetAdress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
+
+
+        foreach (var cart in ShoppingCartVM.ShoppingCartList)
+        {
+            cart.Price = cart.Product.Price;
+
+            ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
+        }
+
+        return View(ShoppingCartVM);
     }
 
 
