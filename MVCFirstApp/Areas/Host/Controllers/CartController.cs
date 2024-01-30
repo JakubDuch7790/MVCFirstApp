@@ -87,12 +87,12 @@ public class CartController : Controller
 
 		ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product");
 
-		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+		ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
 		ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
 		ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
+		//ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
 
 		foreach (var cart in ShoppingCartVM.ShoppingCartList)
 		{
@@ -101,7 +101,7 @@ public class CartController : Controller
 			ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
 		}
 
-		if(ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+		if(applicationUser.CompanyId.GetValueOrDefault() == 0)
 		{
 			//Regular Customer
 			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -113,6 +113,8 @@ public class CartController : Controller
 			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
 			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
 		}
+
+		ModelState.Clear();
 
 		_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 		_unitOfWork.Save();
@@ -129,9 +131,21 @@ public class CartController : Controller
 			_unitOfWork.OrderDetail.Add(orderDetail);
 			_unitOfWork.Save();
 		}
-		return View(ShoppingCartVM);
+
+		if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+		{
+			//Regular Customer - Payment Required - Transaction(Stripe) Logic
+		}
+
+
+
+		return RedirectToAction(nameof(OrderConfirm), new { id = ShoppingCartVM.OrderHeader.Id});
 	}
 
+	public IActionResult OrderConfirm(int id)
+	{
+		return View(id);
+	}
 
 
 }
