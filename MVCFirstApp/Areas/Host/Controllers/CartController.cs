@@ -114,8 +114,6 @@ public class CartController : Controller
 			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
 		}
 
-		//ModelState.Clear();
-
 		_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 		_unitOfWork.Save();
 
