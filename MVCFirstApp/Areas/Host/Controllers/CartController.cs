@@ -5,6 +5,7 @@ using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
 using MVCFirstApp.Utility;
 using System.Security.Claims;
+using static System.Net.WebRequestMethods;
 
 namespace MVCFirstApp.Areas.Host.Controllers;
 
@@ -133,7 +134,26 @@ public class CartController : Controller
 		if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 		{
 			//Regular Customer - Payment Required - Transaction(Stripe) Logic
-		}
+
+			var domain = "https://localhost:7256/";
+
+            var options = new Stripe.Checkout.SessionCreateOptions
+            {
+                SuccessUrl = domain+ $"customer/cart/OrderConfirm?id={ShoppingCartVM.OrderHeader.Id}",
+				CancelUrl = domain+ $"customer/cart/Index",
+                LineItems = new List<Stripe.Checkout.SessionLineItemOptions>
+				{
+				    new Stripe.Checkout.SessionLineItemOptions
+				    {
+				        Price = "price_1MotwRLkdIwHu7ixYcPLm5uZ",
+				        Quantity = 2,
+				    },
+				},
+                Mode = "payment",
+            };
+            var service = new Stripe.Checkout.SessionService();
+            service.Create(options);
+        }
 
 
 
