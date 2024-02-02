@@ -142,14 +142,7 @@ public class CartController : Controller
             {
                 SuccessUrl = domain+ $"customer/cart/OrderConfirm?id={ShoppingCartVM.OrderHeader.Id}",
 				CancelUrl = domain+ $"customer/cart/Index",
-                LineItems = new List<Stripe.Checkout.SessionLineItemOptions>
-				{
-				    new Stripe.Checkout.SessionLineItemOptions
-				    {
-				        Price = "price_1MotwRLkdIwHu7ixYcPLm5uZ",
-				        Quantity = 2,
-				    },
-				},
+                LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
                 Mode = "payment",
             };
 
@@ -165,14 +158,21 @@ public class CartController : Controller
 						{
 							Name = item.Product.CarModel,
 						}
-					}
+					},
+					Quantity = 1
 				};
-
+				options.LineItems.Add(sessionLineItem);
             }
 
 
             var service = new Stripe.Checkout.SessionService();
-            service.Create(options);
+            Session session = service.Create(options);
+
+			_unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+			_unitOfWork.Save();
+
+			Response.Headers.Add("Location", session.Url);
+			return new StatusCodeResult(303);
         }
 
 
