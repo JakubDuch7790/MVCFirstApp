@@ -4,6 +4,7 @@ using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
 using MVCFirstApp.Utility;
+using Stripe.Checkout;
 using System.Security.Claims;
 using static System.Net.WebRequestMethods;
 
@@ -151,6 +152,25 @@ public class CartController : Controller
 				},
                 Mode = "payment",
             };
+
+			foreach(var item in  ShoppingCartVM.ShoppingCartList)
+			{
+				var sessionLineItem = new SessionLineItemOptions
+				{
+					PriceData = new SessionLineItemPriceDataOptions
+					{
+						UnitAmount = (long)(item.Price * 100), //$20.50 => 2050
+						Currency = "usd",
+						ProductData = new SessionLineItemPriceDataProductDataOptions
+						{
+							Name = item.Product.CarModel,
+						}
+					}
+				};
+
+            }
+
+
             var service = new Stripe.Checkout.SessionService();
             service.Create(options);
         }
