@@ -12,9 +12,9 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
     {
         void Update(OrderHeader obj);
 
-        void UpdateStatus(int id, string orderStatus, string? paymentStatus = null);
+        void UpdateStatus(int orderHeaderId, string orderStatus, string? paymentStatus = null);
 
-        void UpdateStripePaymentId(int id, string sessionId, string paymentIntentId);
+        void UpdateStripePaymentId(int orderHeaderId, string sessionId, string paymentIntentId);
     }
 }
     
