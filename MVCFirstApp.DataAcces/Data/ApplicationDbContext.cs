@@ -52,12 +52,11 @@ namespace MVCFirstApp.DataAcces.Data
             modelBuilder.Entity<Product>()
                 .Property(b => b.IsAvailable)
                 .HasDefaultValue(true);
-            //modelBuilder.Entity<ShoppingCart>().Property(x => x.Id)
-            //        .HasColumnName("Id")
-            //        .HasColumnType("int")
-            //        .ValueGeneratedOnAdd();
-            //* *.UseIdentityColumn(); **
-            //modelBuilder.Entity<ShoppingCart>().Property(p => p.Id).HasValueGenerator
+
+            modelBuilder.Entity<OrderHeader>()
+                .HasOne(o => o.ApplicationUser)
+                .WithMany()
+                .HasForeignKey(o => o.ApplicationUserId);
         }
     }
 }

@@ -89,14 +89,15 @@ public class CartController : Controller
 
 		ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId, includedProperties: "Product");
 
-		ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
 		ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
 		ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-		//ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
+        ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-		foreach (var cart in ShoppingCartVM.ShoppingCartList)
+        //ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
+
+        foreach (var cart in ShoppingCartVM.ShoppingCartList)
 		{
 			cart.Price = cart.Product.Price;
 
@@ -116,7 +117,7 @@ public class CartController : Controller
 			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
 		}
 
-		_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
+        _unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 		_unitOfWork.Save();
 
 		foreach(var cart in ShoppingCartVM.ShoppingCartList)
@@ -174,9 +175,6 @@ public class CartController : Controller
 			Response.Headers.Add("Location", session.Url);
 			return new StatusCodeResult(303);
         }
-
-
-
 		return RedirectToAction(nameof(OrderConfirm), new { id = ShoppingCartVM.OrderHeader.Id});
 	}
 
@@ -195,17 +193,16 @@ public class CartController : Controller
 				_unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
 				_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
 				_unitOfWork.Save();
-
 			}
 		}
 
 		List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
-			.GetAll(sc => sc.ApplicationUserId == orderHeader.ApplicationUserId)
-			.ToList<ShoppingCart>();
+			.GetAll(filter: sc => sc.ApplicationUserId == orderHeader.ApplicationUserId,
+					includedProperties: "ApplicationUser")
+			.ToList();
 
 		_unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
-
-
+		_unitOfWork.Save();
 
         return View(id);
     }
