@@ -140,7 +140,7 @@ public class CartController : Controller
 
             var options = new Stripe.Checkout.SessionCreateOptions
             {
-                SuccessUrl = domain+ $"customer/cart/OrderConfirm?id={ShoppingCartVM.OrderHeader.Id}",
+                SuccessUrl = domain+ $"host/cart/OrderConfirm?id={ShoppingCartVM.OrderHeader.Id}",
 				CancelUrl = domain+ $"customer/cart/Index",
                 LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
                 Mode = "payment",
@@ -192,8 +192,8 @@ public class CartController : Controller
 
 			if (session.PaymentStatus.ToLower() == "paid")
 			{
-				_unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
-				_unitOfWork.OrderHeader.UpdateStatus(ShoppingCartVM.OrderHeader.Id, SD.StatusApproved, SD.PaymentStatusApproved);
+				_unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+				_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
 				_unitOfWork.Save();
 
 			}
