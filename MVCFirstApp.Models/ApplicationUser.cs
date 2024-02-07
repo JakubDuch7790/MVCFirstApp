@@ -22,5 +22,6 @@ public class ApplicationUser : IdentityUser
     [ForeignKey(nameof(CompanyId))]
     [ValidateNever]
     public Company Company { get; set; }
+    public ICollection<ShoppingCart> ShoppingCart { get; set; }
 }
 

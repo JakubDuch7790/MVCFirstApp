@@ -48,5 +48,10 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
             _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.ShoppingCarts OFF");
             _db.Database.CommitTransaction();
         }
+        public void Attach<TEntity>(TEntity entity) where TEntity : class
+        {
+            _db.Attach(entity);
+            _db.Entry(entity).State = EntityState.Modified;
+        }
     }
 }

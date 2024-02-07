@@ -63,8 +63,7 @@ public class CartController : Controller
 		};
 
 		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
-
-		ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+        ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
 		ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
 		ShoppingCartVM.OrderHeader.Country = ShoppingCartVM.OrderHeader.ApplicationUser.Country;
 		ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
@@ -93,18 +92,27 @@ public class CartController : Controller
 		ShoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
 		ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-        ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-        //ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u =>u.Id == userId);
+		//ApplicationUser applicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-        foreach (var cart in ShoppingCartVM.ShoppingCartList)
+		//ApplicationUser applicationUser = _unitOfWork.ApplicationUser
+		//.Get(u => u.Id == userId, includedProperties: "ShoppingCart");
+
+		//if (applicationUser != null)
+		//{
+		//    _unitOfWork.Attach(applicationUser);
+		//}
+
+		ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId, tracked:true);
+
+		foreach (var cart in ShoppingCartVM.ShoppingCartList)
 		{
 			cart.Price = cart.Product.Price;
 
 			ShoppingCartVM.OrderHeader.OrderTotal += cart.Price;
 		}
 
-		if(applicationUser.CompanyId.GetValueOrDefault() == 0)
+		if(ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
 		{
 			//Regular Customer
 			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -133,7 +141,7 @@ public class CartController : Controller
 			_unitOfWork.Save();
 		}
 
-		if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+		if (ShoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
 		{
 			//Regular Customer - Payment Required - Transaction(Stripe) Logic
 
@@ -206,6 +214,10 @@ public class CartController : Controller
 
         return View(id);
     }
+	private void CreateShoppingVM()
+	{
+
+	}
 
 
 }

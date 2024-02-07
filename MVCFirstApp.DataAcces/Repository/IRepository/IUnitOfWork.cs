@@ -19,5 +19,6 @@ namespace MVCFirstApp.DataAcces.Repository.IRepository
         void Save();
         void SetIdentityInsertON();
         void SetIdentityInsertOFF();
+        void Attach<TEntity>(TEntity entity) where TEntity : class;
     }
 }
