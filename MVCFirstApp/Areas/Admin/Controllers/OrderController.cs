@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
 
+
 namespace MVCFirstApp.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+
     public class OrderController : Controller
+
     {
         private readonly IUnitOfWork _unitOfWork;
 

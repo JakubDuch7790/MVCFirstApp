@@ -19,8 +19,8 @@ function loadDataTable() {
 
                 "render": function (data) {
                     return `<div class="w-auto btn-group" role="group">
-                    <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-auto">
-                                    <i class="bi bi-pencil-square"> Edit</i>
+                    <a href="/admin/order/details?orderId=${data}" class="btn btn-primary mx-auto">
+                                    <i class="bi bi-pencil-square"></i>
                     </a>
                     </div>`
                 },
