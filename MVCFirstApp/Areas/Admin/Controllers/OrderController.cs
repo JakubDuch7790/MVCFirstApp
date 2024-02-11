@@ -28,6 +28,8 @@ namespace MVCFirstApp.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
             List<OrderHeader> objOrderList = _unitOfWork.OrderHeader.GetAll(includedProperties: "ApplicationUser").ToList();
+
+            //var modifiedOrderList = new List<object>();
             return Json(new { data = objOrderList });
         }
 

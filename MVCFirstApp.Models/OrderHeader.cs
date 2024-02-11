@@ -42,6 +42,7 @@ public class OrderHeader
     public string? Country { get; set; }
     [Required]
     public string? PostalCode { get; set; }
+    public string? PhoneNumber { get; set; }
 
 
 }
