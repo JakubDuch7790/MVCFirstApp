@@ -1,13 +1,30 @@
 ﻿var dataTable;
 
-$(document).ready(function () { loadDataTable(); });
+$(document).ready(function () {
 
-function loadDataTable() {
+    var url = new URL(window.location.href);
+    var status = url.searchParams.get("status");
+
+    //if (status === "inprocess" || status === "completed" || status === "pending" || status === "approved") {
+    //    loadDataTable(status);
+    //} else {
+    //    loadDataTable("all");
+    //}
+    if (status == "pending") {
+        loadDataTable("pending");
+    }
+    else {
+        loadDataTable("all");
+    }
+    
+});
+
+function loadDataTable(status) {
 
     dataTable = $('#tableData').DataTable({
-        "ajax": { url: '/Admin/Order/Getall' },
+        "ajax": { url: '/Admin/Order/Getall?status=' + status },
         "columns": [
-            { data: 'id', "width": "15%" },
+            { data: 'id', "width": "10%" },
             { data: 'name', "width": "5%" },
             { data: 'phoneNumber', "width": "10%" },
             { data: 'applicationUser.email', "width": "15%" },
@@ -25,7 +42,7 @@ function loadDataTable() {
                     </div>`
                 },
 
-                "width": "20%"
+                "width": "15%"
             },
         ]
         })
