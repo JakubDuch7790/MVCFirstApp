@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
+using MVCFirstApp.Models.ViewModels;
 using MVCFirstApp.Utility;
 using System.Diagnostics;
 
@@ -22,6 +23,15 @@ namespace MVCFirstApp.Areas.Admin.Controllers
         public IActionResult Index() 
         {
             return View();
+        }
+        public IActionResult Details(int orderId)
+        {
+            OrderVM orderVM= new()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includedProperties: "ApplicationUser"),
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includedProperties:"Product")
+            };
+            return View(orderVM);
         }
 
         #region API CALLS
