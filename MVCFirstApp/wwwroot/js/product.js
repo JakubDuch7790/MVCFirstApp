@@ -21,7 +21,7 @@ function loadDataTable() {
                 "render": function (data) {
                     return `<div class="w-auto btn-group" role="group">
                     <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-auto">
-                                    <i class="bi bi-pencil-square"> Edit</i>
+                                    <i class="bi bi-pencil-square"> Pojeb sa</i>
                     </a>
                     <a Onclick=Delete('/admin/product/delete/${data}') class="btn btn-danger mx-auto">
                         <i class="bi bi-trash3-fill"> Delete</i>

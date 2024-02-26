@@ -5,6 +5,7 @@ using MVCFirstApp.Models;
 using MVCFirstApp.Models.ViewModels;
 using MVCFirstApp.Utility;
 using System.Diagnostics;
+using System.Security.Claims;
 
 
 namespace MVCFirstApp.Areas.Admin.Controllers;
@@ -38,6 +39,23 @@ namespace MVCFirstApp.Areas.Admin.Controllers;
     [HttpGet]
     public IActionResult GetAll(string status)
     {
+        IEnumerable<OrderHeader> objOrderHeaders;
+
+        if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+        {
+            objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includedProperties: "ApplicationUser").ToList();
+        }
+        else
+        {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            objOrderHeaders = _unitOfWork.OrderHeader
+                .GetAll(u => u.ApplicationUserId == userId, includedProperties: "ApplicationUser");
+        }
+
+
         IEnumerable<OrderHeader> objOrderList = _unitOfWork.OrderHeader.GetAll(includedProperties: "ApplicationUser").ToList();
 
         switch (status)
