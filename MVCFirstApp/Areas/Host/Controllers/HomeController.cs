@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using MVCFirstApp.DataAcces.Data;
 using MVCFirstApp.DataAcces.Repository.IRepository;
 using MVCFirstApp.Models;
+using MVCFirstApp.Utility;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -61,10 +62,9 @@ public class HomeController : Controller
         //{
         //    //add a cart
         //_unitOfWork.ShoppingCart.Add(shoppingCart);
-
-
         //}
         _unitOfWork.ShoppingCart.Add(shoppingCart);
+        HttpContext.Session.SetInt32(SD.SessionCart, /*_unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId*/1);
 
         TempData["success"] = "Product has been successfully added to your Cart";
 
